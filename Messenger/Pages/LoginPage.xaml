@@ -1,0 +1,106 @@
+﻿<Page x:Class="Messenger.Pages.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Messenger.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="LoginPage">
+
+    <Page.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="#e7feff"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid Width="400" Height="35">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" BorderThickness="0" Background="#444755" CornerRadius="5,0,0,5">
+                                <Image Source="/Images/user.png" Height="30"/>
+                            </Border>
+                            <Border Grid.Column="1" BorderThickness="0" CornerRadius="0,5,5,0" Background="#3a3c49">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="7,0,0,0" VerticalAlignment="Center"/>
+                        </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Foreground" Value="#e7feff"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Grid Width="400" Height="35">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" BorderThickness="0" Background="#444755" CornerRadius="5,0,0,5">
+                                <Image Source="/Images/padlock.png" Height="30"/>
+                            </Border>
+                            <Border Grid.Column="1" BorderThickness="0" CornerRadius="0,5,5,0" Background="#3a3c49">
+                                <ScrollViewer x:Name="PART_ContentHost" Margin="7,0,0,0" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="#2dc17a" BorderThickness="0" CornerRadius="5" Width="400" Height="35">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="#e7feff" TextBlock.FontSize="20"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="#2dc17a" BorderThickness="0" CornerRadius="5" Width="405" Height="35">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="#e7feff" TextBlock.FontSize="20"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Page.Resources>
+
+    <Grid Width="550" Background="#282b35" Height="600">
+        <TextBlock Text="MESSENGER" VerticalAlignment="Top" Foreground="#e7feff" HorizontalAlignment="Center" FontSize="70" FontFamily="/Messenger;component/Fonts/#Billo" Margin="0,50,0,0"/>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+            <Grid Margin="5">
+                <TextBox TextChanged="LoginBoxTextChanged"  VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="LoginBox" Margin="5"/>
+                <TextBlock x:Name="PlaceholderLogin" FontSize="18" IsHitTestVisible="False" Text="Логин" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="55,0,0,0" Foreground="#9599a5"/>
+            </Grid>
+
+            <Grid Margin="5">
+                <PasswordBox PasswordChanged="PasswordBoxPasswordChanged"  VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="PasswordBox" Margin="5,0,0,0" Grid.ColumnSpan="2"/>
+                <TextBlock x:Name="PlaceholderPassword" FontSize="18" IsHitTestVisible="False" Text="Пароль" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="55,0,0,0" Foreground="#9599a5"/>
+            </Grid>
+
+            <Button Height="50" Margin="5" Content="Войти" Cursor="Hand" x:Name="LoginButton" Click="LoginButtonClick"/>
+        </StackPanel>
+        <TextBlock Text="Created by Misha" VerticalAlignment="Bottom" Foreground="#e7feff" HorizontalAlignment="Right" FontSize="16" FontFamily="/Messenger;component/Fonts/#WindCTT" Margin="10"/>
+    </Grid>
+</Page>

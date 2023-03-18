@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище user2_dbModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Messenger_Dialog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdFirstUser" Type="int" Nullable="false" />
+          <Property Name="IdSecondUser" Type="int" Nullable="false" />
+          <Property Name="LastMessage" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Messenger_Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="IdSticker" Type="int" />
+          <Property Name="IdDialog" Type="int" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="LastIdSenderUser" Type="int" />
+          <Property Name="LastNicknameSenderUser" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Messenger_Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Image" Type="image" />
+          <Property Name="IdAuthor" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Messenger_Sticker">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Image" Type="image" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Messenger_User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nickname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="ListIdFriends" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_Messenger_Dialog_Messenger_User">
+          <End Role="Messenger_User" Type="Self.Messenger_User" Multiplicity="1" />
+          <End Role="Messenger_Dialog" Type="Self.Messenger_Dialog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messenger_User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messenger_Dialog">
+              <PropertyRef Name="IdFirstUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messenger_Dialog_Messenger_User1">
+          <End Role="Messenger_User" Type="Self.Messenger_User" Multiplicity="1" />
+          <End Role="Messenger_Dialog" Type="Self.Messenger_Dialog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messenger_User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messenger_Dialog">
+              <PropertyRef Name="IdSecondUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messenger_Message_Messenger_Dialog">
+          <End Role="Messenger_Dialog" Type="Self.Messenger_Dialog" Multiplicity="1" />
+          <End Role="Messenger_Message" Type="Self.Messenger_Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messenger_Dialog">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messenger_Message">
+              <PropertyRef Name="IdDialog" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messenger_Message_Messenger_Sticker">
+          <End Role="Messenger_Sticker" Type="Self.Messenger_Sticker" Multiplicity="0..1" />
+          <End Role="Messenger_Message" Type="Self.Messenger_Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messenger_Sticker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messenger_Message">
+              <PropertyRef Name="IdSticker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messenger_Post_Messenger_User">
+          <End Role="Messenger_User" Type="Self.Messenger_User" Multiplicity="1" />
+          <End Role="Messenger_Post" Type="Self.Messenger_Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messenger_User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messenger_Post">
+              <PropertyRef Name="IdAuthor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище user2_dbModelContainer">
+          <EntitySet Name="Messenger_Dialog" EntityType="Self.Messenger_Dialog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messenger_Message" EntityType="Self.Messenger_Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messenger_Post" EntityType="Self.Messenger_Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messenger_Sticker" EntityType="Self.Messenger_Sticker" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messenger_User" EntityType="Self.Messenger_User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Messenger_Dialog_Messenger_User" Association="Self.FK_Messenger_Dialog_Messenger_User">
+            <End Role="Messenger_User" EntitySet="Messenger_User" />
+            <End Role="Messenger_Dialog" EntitySet="Messenger_Dialog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messenger_Dialog_Messenger_User1" Association="Self.FK_Messenger_Dialog_Messenger_User1">
+            <End Role="Messenger_User" EntitySet="Messenger_User" />
+            <End Role="Messenger_Dialog" EntitySet="Messenger_Dialog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messenger_Message_Messenger_Dialog" Association="Self.FK_Messenger_Message_Messenger_Dialog">
+            <End Role="Messenger_Dialog" EntitySet="Messenger_Dialog" />
+            <End Role="Messenger_Message" EntitySet="Messenger_Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messenger_Message_Messenger_Sticker" Association="Self.FK_Messenger_Message_Messenger_Sticker">
+            <End Role="Messenger_Sticker" EntitySet="Messenger_Sticker" />
+            <End Role="Messenger_Message" EntitySet="Messenger_Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messenger_Post_Messenger_User" Association="Self.FK_Messenger_Post_Messenger_User">
+            <End Role="Messenger_User" EntitySet="Messenger_User" />
+            <End Role="Messenger_Post" EntitySet="Messenger_Post" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="user2_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Messenger_Dialog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdFirstUser" Type="Int32" Nullable="false" />
+          <Property Name="IdSecondUser" Type="Int32" Nullable="false" />
+          <Property Name="LastMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Messenger_User" Relationship="Self.FK_Messenger_Dialog_Messenger_User" FromRole="Messenger_Dialog" ToRole="Messenger_User" />
+          <NavigationProperty Name="Messenger_User1" Relationship="Self.FK_Messenger_Dialog_Messenger_User1" FromRole="Messenger_Dialog" ToRole="Messenger_User" />
+          <NavigationProperty Name="Messenger_Message" Relationship="Self.FK_Messenger_Message_Messenger_Dialog" FromRole="Messenger_Dialog" ToRole="Messenger_Message" />
+        </EntityType>
+        <EntityType Name="Messenger_Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdSticker" Type="Int32" />
+          <Property Name="IdDialog" Type="Int32" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Messenger_Dialog" Relationship="Self.FK_Messenger_Message_Messenger_Dialog" FromRole="Messenger_Message" ToRole="Messenger_Dialog" />
+          <NavigationProperty Name="Messenger_Sticker" Relationship="Self.FK_Messenger_Message_Messenger_Sticker" FromRole="Messenger_Message" ToRole="Messenger_Sticker" />
+          <Property Name="LastIdSenderUser" Type="Int32" />
+          <Property Name="LastNicknameSenderUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Messenger_Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IdAuthor" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Messenger_User" Relationship="Self.FK_Messenger_Post_Messenger_User" FromRole="Messenger_Post" ToRole="Messenger_User" />
+        </EntityType>
+        <EntityType Name="Messenger_Sticker">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="Messenger_Message" Relationship="Self.FK_Messenger_Message_Messenger_Sticker" FromRole="Messenger_Sticker" ToRole="Messenger_Message" />
+        </EntityType>
+        <EntityType Name="Messenger_User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nickname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ListIdFriends" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Messenger_Dialog" Relationship="Self.FK_Messenger_Dialog_Messenger_User" FromRole="Messenger_User" ToRole="Messenger_Dialog" />
+          <NavigationProperty Name="Messenger_Dialog1" Relationship="Self.FK_Messenger_Dialog_Messenger_User1" FromRole="Messenger_User" ToRole="Messenger_Dialog" />
+          <NavigationProperty Name="Messenger_Post" Relationship="Self.FK_Messenger_Post_Messenger_User" FromRole="Messenger_User" ToRole="Messenger_Post" />
+        </EntityType>
+        <Association Name="FK_Messenger_Dialog_Messenger_User">
+          <End Role="Messenger_User" Type="Self.Messenger_User" Multiplicity="1" />
+          <End Role="Messenger_Dialog" Type="Self.Messenger_Dialog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messenger_User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messenger_Dialog">
+              <PropertyRef Name="IdFirstUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messenger_Dialog_Messenger_User1">
+          <End Role="Messenger_User" Type="Self.Messenger_User" Multiplicity="1" />
+          <End Role="Messenger_Dialog" Type="Self.Messenger_Dialog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messenger_User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messenger_Dialog">
+              <PropertyRef Name="IdSecondUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messenger_Message_Messenger_Dialog">
+          <End Role="Messenger_Dialog" Type="Self.Messenger_Dialog" Multiplicity="1" />
+          <End Role="Messenger_Message" Type="Self.Messenger_Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messenger_Dialog">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messenger_Message">
+              <PropertyRef Name="IdDialog" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messenger_Message_Messenger_Sticker">
+          <End Role="Messenger_Sticker" Type="Self.Messenger_Sticker" Multiplicity="0..1" />
+          <End Role="Messenger_Message" Type="Self.Messenger_Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messenger_Sticker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messenger_Message">
+              <PropertyRef Name="IdSticker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messenger_Post_Messenger_User">
+          <End Role="Messenger_User" Type="Self.Messenger_User" Multiplicity="1" />
+          <End Role="Messenger_Post" Type="Self.Messenger_Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messenger_User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messenger_Post">
+              <PropertyRef Name="IdAuthor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="user2_dbEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Messenger_Dialog" EntityType="Self.Messenger_Dialog" />
+          <EntitySet Name="Messenger_Message" EntityType="Self.Messenger_Message" />
+          <EntitySet Name="Messenger_Post" EntityType="Self.Messenger_Post" />
+          <EntitySet Name="Messenger_Sticker" EntityType="Self.Messenger_Sticker" />
+          <EntitySet Name="Messenger_User" EntityType="Self.Messenger_User" />
+          <AssociationSet Name="FK_Messenger_Dialog_Messenger_User" Association="Self.FK_Messenger_Dialog_Messenger_User">
+            <End Role="Messenger_User" EntitySet="Messenger_User" />
+            <End Role="Messenger_Dialog" EntitySet="Messenger_Dialog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messenger_Dialog_Messenger_User1" Association="Self.FK_Messenger_Dialog_Messenger_User1">
+            <End Role="Messenger_User" EntitySet="Messenger_User" />
+            <End Role="Messenger_Dialog" EntitySet="Messenger_Dialog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messenger_Message_Messenger_Dialog" Association="Self.FK_Messenger_Message_Messenger_Dialog">
+            <End Role="Messenger_Dialog" EntitySet="Messenger_Dialog" />
+            <End Role="Messenger_Message" EntitySet="Messenger_Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messenger_Message_Messenger_Sticker" Association="Self.FK_Messenger_Message_Messenger_Sticker">
+            <End Role="Messenger_Sticker" EntitySet="Messenger_Sticker" />
+            <End Role="Messenger_Message" EntitySet="Messenger_Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messenger_Post_Messenger_User" Association="Self.FK_Messenger_Post_Messenger_User">
+            <End Role="Messenger_User" EntitySet="Messenger_User" />
+            <End Role="Messenger_Post" EntitySet="Messenger_Post" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище user2_dbModelContainer" CdmEntityContainer="user2_dbEntities1">
+          <EntitySetMapping Name="Messenger_Dialog">
+            <EntityTypeMapping TypeName="user2_dbModel.Messenger_Dialog">
+              <MappingFragment StoreEntitySet="Messenger_Dialog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdFirstUser" ColumnName="IdFirstUser" />
+                <ScalarProperty Name="IdSecondUser" ColumnName="IdSecondUser" />
+                <ScalarProperty Name="LastMessage" ColumnName="LastMessage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messenger_Message">
+            <EntityTypeMapping TypeName="user2_dbModel.Messenger_Message">
+              <MappingFragment StoreEntitySet="Messenger_Message">
+                <ScalarProperty Name="LastNicknameSenderUser" ColumnName="LastNicknameSenderUser" />
+                <ScalarProperty Name="LastIdSenderUser" ColumnName="LastIdSenderUser" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="IdSticker" ColumnName="IdSticker" />
+                <ScalarProperty Name="IdDialog" ColumnName="IdDialog" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messenger_Post">
+            <EntityTypeMapping TypeName="user2_dbModel.Messenger_Post">
+              <MappingFragment StoreEntitySet="Messenger_Post">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="IdAuthor" ColumnName="IdAuthor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messenger_Sticker">
+            <EntityTypeMapping TypeName="user2_dbModel.Messenger_Sticker">
+              <MappingFragment StoreEntitySet="Messenger_Sticker">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messenger_User">
+            <EntityTypeMapping TypeName="user2_dbModel.Messenger_User">
+              <MappingFragment StoreEntitySet="Messenger_User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="ListIdFriends" ColumnName="ListIdFriends" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

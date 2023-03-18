@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5b5fcb61270a4cf6b13be779b4916c23" Name="Diagram1">
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_Dialog" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_Message" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_Post" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_Sticker" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_User" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_Dialog_Messenger_User" ManuallyRouted="false" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_Dialog_Messenger_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_Message_Messenger_Dialog" ManuallyRouted="false" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_Message_Messenger_Sticker" ManuallyRouted="false" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_Post_Messenger_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
