@@ -12,7 +12,6 @@ namespace Messenger.Entites
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Runtime.InteropServices.WindowsRuntime;
     using System.Windows.Media;
 
     public partial class Messenger_User
@@ -26,6 +25,7 @@ namespace Messenger.Entites
             this.Messenger_Friendship1 = new HashSet<Messenger_Friendship>();
             this.Messenger_Group = new HashSet<Messenger_Group>();
             this.Messenger_SavedPost = new HashSet<Messenger_SavedPost>();
+            this.Messenger_Subscriber = new HashSet<Messenger_Subscriber>();
         }
     
         public int Id { get; set; }
@@ -34,16 +34,19 @@ namespace Messenger.Entites
         public string Password { get; set; }
         public string Phone { get; set; }
         public Nullable<int> IdAvatar { get; set; }
+        public Nullable<int> IdCity { get; set; }
+        public string Description { get; set; }
 
-        public ImageSource AvatarImageSource { get
+
+        public ImageSource AvatarImageSource
+        {
+            get
             {
-                    return App.avatars.FirstOrDefault(x => x.Key == IdAvatar).Value;       
+                return App.avatars.FirstOrDefault(x => x.Key == IdAvatar).Value;
             }
         }
 
-        public Nullable<int> IdCity { get; set; }
-        public string Description { get; set; }
-    
+
         public virtual Messenger_Avatar Messenger_Avatar { get; set; }
         public virtual Messenger_City Messenger_City { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -58,5 +61,7 @@ namespace Messenger.Entites
         public virtual ICollection<Messenger_Group> Messenger_Group { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Messenger_SavedPost> Messenger_SavedPost { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Messenger_Subscriber> Messenger_Subscriber { get; set; }
     }
 }

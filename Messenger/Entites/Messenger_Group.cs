@@ -18,6 +18,7 @@ namespace Messenger.Entites
         public Messenger_Group()
         {
             this.Messenger_Post = new HashSet<Messenger_Post>();
+            this.Messenger_Subscriber = new HashSet<Messenger_Subscriber>();
         }
     
         public int Id { get; set; }
@@ -28,5 +29,7 @@ namespace Messenger.Entites
         public virtual Messenger_User Messenger_User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Messenger_Post> Messenger_Post { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Messenger_Subscriber> Messenger_Subscriber { get; set; }
     }
 }

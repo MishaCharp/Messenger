@@ -8,7 +8,200 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AccountPage">
 
-    <Grid>
-        
-    </Grid>
+    <Page.Resources>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="#e7feff"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Grid.Column="1" BorderThickness="0" CornerRadius="5" Background="#3a3c49" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="7,5,0,0" VerticalAlignment="Center" Height="{TemplateBinding Height}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Foreground" Value="#e7feff"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border Grid.Column="1" BorderThickness="0" CornerRadius="5" Background="#3a3c49" Width="350" Height="35">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="7,0,0,0" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="#2dc17a" BorderThickness="0" CornerRadius="5" Width="190" Height="35" Cursor="Hand">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="#e7feff" TextBlock.FontSize="20"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="#2dc17a" BorderThickness="0" CornerRadius="5" Width="195" Height="37" Cursor="Hand">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="#e7feff" TextBlock.FontSize="20"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="BtnTwoStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="#2dc17a" BorderThickness="0" CornerRadius="5" Width="250" Height="35" Cursor="Hand">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="#e7feff" TextBlock.FontSize="20"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="#2dc17a" BorderThickness="0" CornerRadius="5" Width="255" Height="37" Cursor="Hand">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="#e7feff" TextBlock.FontSize="20"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="MyTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Foreground" Value="#9599a5"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#e7feff"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Page.Resources>
+
+    <Border Width="550" Background="#282b35" Height="600" Margin="0,0,0,0" CornerRadius="20">
+        <Grid>
+            
+        <Grid x:Name="EditAccountGrid" Width="400" Background="#282b35" Height="600" Margin="30,0,0,0" HorizontalAlignment="Center" Visibility="Hidden">
+
+            <StackPanel  Orientation="Vertical" Margin="0,20,0,0">
+
+                <Grid Margin="5">
+                    <TextBox TextChanged="NicknameBoxTextChanged" VerticalAlignment="Center" MaxLength="29" HorizontalAlignment="Left" x:Name="NicknameBox" Width="350" Height="35" Margin="5"/>
+                    <TextBlock x:Name="PlaceholderNickname" FontSize="18" IsHitTestVisible="False" Text="Никнейм" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" Foreground="#9599a5"/>
+                </Grid>
+
+                <Grid Margin="5">
+                        <TextBox TextChanged="LoginBoxTextChanged" VerticalAlignment="Center" MaxLength="29" HorizontalAlignment="Left" x:Name="LoginBox" Width="350" Height="35" Margin="5"/>
+                    <TextBlock x:Name="PlaceholderLogin" FontSize="18" IsHitTestVisible="False" Text="Логин" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" Foreground="#9599a5"/>
+                </Grid>
+
+                <Grid Margin="5">
+                        <PasswordBox PasswordChanged="PasswordBoxPasswordChanged" VerticalAlignment="Center"  HorizontalAlignment="Left" x:Name="PasswordBox" Width="350" Margin="5"/>
+                    <TextBlock x:Name="PlaceholderPassword" FontSize="18" IsHitTestVisible="False" Text="Пароль" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" Foreground="#9599a5"/>
+                </Grid>
+
+                <Grid Margin="5">
+                        <ComboBox SelectionChanged="CountryesComboBoxSelectionChanged" Margin="0,0,25,0" DisplayMemberPath="Country" Name="CountryesComboBox" Width="350" FontSize="20" Style="{DynamicResource MaterialDesignComboBox}" IsReadOnly="True" IsEditable="True" Text="Страна" Foreground="#e7feff"/>
+                </Grid>
+
+                <Grid Margin="5">
+                        <ComboBox SelectionChanged="CityComboBoxSelectionChanged" Margin="0,0,25,0" x:Name="CityComboBox" DisplayMemberPath="City" Width="350" FontSize="20" Style="{DynamicResource MaterialDesignComboBox}" IsReadOnly="True" IsEditable="True" Text="Город" Foreground="#e7feff"/>
+                </Grid>
+
+                <Grid Margin="5">
+                        <TextBox TextChanged="PhoneBoxTextChanged" MaxLength="12" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="PhoneBox" Margin="5" Width="350" Height="35" />
+                    <TextBlock x:Name="PlaceholderPhone" FontSize="18" IsHitTestVisible="False" Text="Телефон" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" Foreground="#9599a5"/>
+                </Grid>
+
+                <Grid Margin="5">
+                        <ComboBox SelectionChanged="AvatarsComboBoxSelectionChanged" Margin="0,0,25,0" Name="AvatarsComboBox" Width="350" FontSize="20" Style="{DynamicResource MaterialDesignComboBox}" IsReadOnly="True" Foreground="#282b35" IsEditable="True">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Height="110" Width="100">
+                                    <Image Source="{Binding Value}" Height="100" Width="100"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock x:Name="PlaceholderAvatar" FontSize="20" IsHitTestVisible="False" Margin="7,0,0,0" Text="Аватарка" Foreground="#e7feff"/>
+                </Grid>
+
+                <Grid Margin="5">
+                        <TextBox TextChanged="DescriptionBoxTextChanged" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="14" x:Name="DescriptionBox" Margin="5" Height="130" Width="350"/>
+                    <TextBlock x:Name="PlaceholderDesciption" FontSize="18" IsHitTestVisible="False" Text="Описание страницы" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="15,5,0,0" Foreground="#9599a5"/>
+                </Grid>
+
+
+
+            </StackPanel>
+
+                <Button x:Name="EditAccountButton" Click="EditAccountButtonClick" Width="200" Content="Внести изменения" VerticalAlignment="Bottom" Margin="0,0,20,25"/>
+
+                <TextBlock Style="{StaticResource MyTextBlockStyle}" x:Name="CloseEditorText" MouseLeftButtonDown="CloseEditorTextMouseLeftButtonDown" Text="Вернуться назад"/>
+
+            </Grid>
+        <Grid x:Name="AccountGrid" Visibility="Visible">
+
+            <Border Background="#4f5369" x:Name="RoundedAvatar" Width="180" Height="180" CornerRadius="90" BorderThickness="3" BorderBrush="Black" Margin="10 10 350 300">
+                <Image x:Name="RoundedAvatarImage" Width="140" Height="140" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+
+            <TextBlock Foreground="White" FontSize="30" TextWrapping="Wrap" Text="" Height="70" x:Name="LoginTextBlock"  Margin="230 30 0 300" FontFamily="Arial Black"/>
+
+            <Border x:Name="CountryPanel" Margin="180,0,64,130" Height="40">
+                <StackPanel  Orientation="Horizontal">
+                    <Image Source="/Images/location.png" Width="30" Height="30"/>
+                    <TextBlock Name="CountryTextBlock" Text="Россия" Height="20" FontSize="14" Foreground="#e7feff" Margin="8"/>
+                </StackPanel>
+            </Border>
+
+            <Border x:Name="PhonePanel" Margin="353,0,64,130" Height="40" Width="180">
+                <StackPanel  Orientation="Horizontal">
+                    <Image Source="/Images/phone.png" Width="30" Height="30" Margin="5,0,0,0"/>
+                    <TextBlock Name="PhoneTextBlock" Text="89201215506" Height="20" FontSize="14" Foreground="#e7feff" Margin="8"/>
+                </StackPanel>
+            </Border>
+
+            <Border x:Name="DescriptionPanel" Width="515" Height="200" BorderThickness="2" BorderBrush="Black" Margin="0,140,0,0" CornerRadius="10">
+                <TextBlock x:Name="DescriptionTextBlock" Width="514" Height="200" TextWrapping="Wrap" Text="" Foreground="#e7feff" FontSize="16" Padding="5" FontStyle="Italic"/>
+            </Border>
+
+                <Button x:Name="OpenEditAccountButton" Click="OpenAccountButtonClick" Style="{StaticResource BtnTwoStyle}" Content="Отредактировать данные" VerticalAlignment="Bottom" Margin="0,0,0,30"/>
+
+
+            </Grid>
+            
+        </Grid>
+    </Border>
+    
 </Page>
