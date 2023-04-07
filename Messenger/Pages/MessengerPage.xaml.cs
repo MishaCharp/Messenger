@@ -40,7 +40,8 @@ namespace Messenger.Pages
             {
                 if(NameIcon==(icon as DockPanel).Name)
                 {
-                    (icon as DockPanel).Background = new SolidColorBrush(Color.FromRgb(4,18,32)); 
+                    (icon as DockPanel).Background = new SolidColorBrush(Color.FromRgb(4,18,32));
+                    App.AnimateBorderOpacityFast(icon as DockPanel);
                     switch (NameIcon)
                     {
                         case "AccountPanel":

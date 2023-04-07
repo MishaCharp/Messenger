@@ -31,6 +31,7 @@ namespace Messenger.Pages
         public MessagePage()
         {
             InitializeComponent();
+            App.AnimateBorderOpacity(this);
             try
             {
                 dialogs = App.Context.Messenger_Dialog.Where(x => x.IdFirstUser == App.CurrentUser.Id || x.IdSecondUser == App.CurrentUser.Id).ToList();
@@ -41,24 +42,40 @@ namespace Messenger.Pages
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                new Windows.NewMessageBox(Window.GetWindow(this), "Ошибка", ex.Message).ShowDialog();
             }
-            
+
         }
 
         public static Entites.user2_dbEntities1 _Context { get; set; } = null;
+
+        int countDialogMessage = 0;
+
+        int _countDialogMessage = 0;
 
         private void TimerTick(object sender, EventArgs e)
         {
             try
             {
-                _Context = new Entites.user2_dbEntities1();
-                dialogs = _Context.Messenger_Dialog.Where(x => x.IdFirstUser == App.CurrentUser.Id || x.IdSecondUser == App.CurrentUser.Id).ToList();
-                MessageListBox.ItemsSource = dialogs;
+                var dialogs = new Entites.user2_dbEntities1().Messenger_Dialog.Where(x => x.IdFirstUser == App.CurrentUser.Id || x.IdSecondUser == App.CurrentUser.Id).ToList();
+
+                countDialogMessage = 0;
+
+                foreach (var dialog in dialogs)
+                {
+                    countDialogMessage += dialog.Messenger_Message.Count;
+                }
+
+                if (countDialogMessage != _countDialogMessage)
+                {
+                    MessageListBox.ItemsSource = dialogs;
+                    _countDialogMessage = countDialogMessage;
+                }
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                new Windows.NewMessageBox(Window.GetWindow(this), "Ошибка", ex.Message).ShowDialog();
             }
         }
 
@@ -72,7 +89,7 @@ namespace Messenger.Pages
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                new Windows.NewMessageBox(Window.GetWindow(this), "Ошибка", ex.Message).ShowDialog();
             }
         }
     }

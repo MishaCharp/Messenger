@@ -8,7 +8,313 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="FriendsPage">
 
-    <Grid>
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="#2dc17a" BorderThickness="0" CornerRadius="5" Width="125" Height="30" Cursor="Hand">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="#e7feff" TextBlock.FontSize="14"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="#2dc17a" BorderThickness="1" CornerRadius="5" Width="125" Height="30" Cursor="Hand">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="#e7feff" TextBlock.FontSize="14"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="CancelButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="#e64c4c" BorderThickness="0" CornerRadius="5" Width="125" Height="30" Cursor="Hand">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="#e7feff" TextBlock.FontSize="14"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="#e64c4c" BorderThickness="1" CornerRadius="5" Width="125" Height="30" Cursor="Hand">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="#e7feff" TextBlock.FontSize="14"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="TwoButtonStyleFirst">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="#2dc17a" BorderThickness="0" CornerRadius="5" Width="60" Height="30" Cursor="Hand">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="#e7feff" TextBlock.FontSize="11"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="#2dc17a" BorderThickness="1" CornerRadius="5" Width="60" Height="30" Cursor="Hand">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="#e7feff" TextBlock.FontSize="10"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="TwoButtonStyleSecond">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="#e64c4c" BorderThickness="0" CornerRadius="5" Width="60" Height="30" Cursor="Hand">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="#e7feff" TextBlock.FontSize="11"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="#e64c4c" BorderThickness="1" CornerRadius="5" Width="60" Height="30" Cursor="Hand">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="#e7feff" TextBlock.FontSize="10"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style TargetType="TextBox" x:Key="TypicalTextBox">
+            <Setter Property="Foreground" Value="#e7feff"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Grid.Column="1" BorderThickness="0" CornerRadius="5" Background="#3a3c49" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="7,5,0,0" VerticalAlignment="Center" Height="{TemplateBinding Height}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+    </Page.Resources>
+    
+    <Grid x:Name="MainGrid">
+        <Grid x:Name="MyFriendsGrid" Visibility="Hidden">
+            
+        </Grid>
+        <Grid x:Name="SearchFriendsGrid" Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <!--  Верхняя рамка с поиском друзей -->
+            <Border Grid.Row="0" BorderBrush="#504e50" BorderThickness="3 3 3 0" CornerRadius="20 20 0 0" Margin="10 10 10 0">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Поиск друзей" FontSize="30" Foreground="#e7feff" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="SearchTextBox" FontSize="30" Foreground="#e7feff" Height="45" TextChanged="SearchTextBoxTextChanged"/>
+                </StackPanel>
+            </Border>
+            <!---->
+            <Border Grid.Row="1" Grid.Column="0" BorderBrush="#504e50" BorderThickness="3 0 3 3" CornerRadius="0 0 20 20" Margin="10 0 10 10">
+            <!-- ListView с пользователями  -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Vertical">
+                        <TextBlock Text="Пользователи" FontSize="20" TextAlignment="Center" Foreground="#e7feff"/>
+                        <ListView x:Name="FriendsListBox" ScrollViewer.HorizontalScrollBarVisibility="Visible" Background="Transparent" Margin="10" BorderThickness="0">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                <Border x:Name="Bd"
+                            SnapsToDevicePixels="true"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Bd" Property="BorderBrush" Value="Silver" />
+                                                        <Setter TargetName="Bd" Property="CornerRadius" Value="10,5,10,5" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical" Width="125" Margin="10">
+                                        <Border Width="100" Height="100" CornerRadius="10" BorderThickness="1" BorderBrush="Black" Padding="15">
+                                            <Border.Background>
+                                                <SolidColorBrush Color="#2c476d" Opacity="0.6"/>
+                                            </Border.Background>
+                                            <Image Source="{Binding AvatarImageSource}"/>
+                                        </Border>
+                                        <TextBlock Text="{Binding Nickname}" Foreground="#71aaeb" TextAlignment="Center"/>
+                                        <Button Content="Добавить в друзья" x:Name="AddFriendButton" Click="AddFriendButtonClick"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Separator/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Orientation="Vertical">
+                        <TextBlock Text="Заявки от меня" FontSize="20" TextAlignment="Center" Foreground="#e7feff"/>
+                        <ListView x:Name="RequestsFromMeListBox" ScrollViewer.HorizontalScrollBarVisibility="Visible" Background="Transparent" Margin="10" BorderThickness="0">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                <Border x:Name="Bd"
+                            SnapsToDevicePixels="true"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Bd" Property="BorderBrush" Value="Silver" />
+                                                        <Setter TargetName="Bd" Property="CornerRadius" Value="10,5,10,5" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical" Width="125" Margin="10">
+                                        <Border Width="100" Height="100" CornerRadius="10" BorderThickness="1" BorderBrush="Black" Padding="15">
+                                            <Border.Background>
+                                                <SolidColorBrush Color="#2c476d" Opacity="0.6"/>
+                                            </Border.Background>
+                                            <Image Source="{Binding AvatarImageSource}"/>
+                                        </Border>
+                                        <TextBlock Text="{Binding Nickname}" Foreground="#71aaeb" TextAlignment="Center"/>
+                                        <Button Style="{StaticResource CancelButton}" Content="Отменить заявку" x:Name="AddFriendButton" Click="AddFriendButtonClick"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Separator/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Orientation="Vertical">
+                        <TextBlock Text="Заявки для меня" FontSize="20" TextAlignment="Center" Foreground="#e7feff"/>
+                        <ListView x:Name="RequestsToMeListBox" ScrollViewer.HorizontalScrollBarVisibility="Visible" Background="Transparent" Margin="10" BorderThickness="0">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                <Border x:Name="Bd"
+                            SnapsToDevicePixels="true"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Bd" Property="BorderBrush" Value="Silver" />
+                                                        <Setter TargetName="Bd" Property="CornerRadius" Value="10,5,10,5" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical" Width="125" Margin="10">
+                                        <Border Width="100" Height="100" CornerRadius="10" BorderThickness="1" BorderBrush="Black" Padding="15">
+                                            <Border.Background>
+                                                <SolidColorBrush Color="#2c476d" Opacity="0.6"/>
+                                            </Border.Background>
+                                            <Image Source="{Binding AvatarImageSource}"/>
+                                        </Border>
+                                        <TextBlock Text="{Binding Nickname}" Foreground="#71aaeb" TextAlignment="Center"/>
+                                        <DockPanel>
+                                            <Button HorizontalAlignment="Left" Style="{StaticResource TwoButtonStyleFirst}" Content="Принять" x:Name="AddFriendButton" Click="AddFriendButtonClick"/>
+                                            <Button HorizontalAlignment="Right" Style="{StaticResource TwoButtonStyleSecond}" Content="Отклонить" x:Name="FriendButton" Click="AddFriendButtonClick"/>
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Separator/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Grid.RowSpan="2" Grid.Column="1" BorderBrush="#504e50" BorderThickness="3" Margin="10" CornerRadius="20"/>
+        </Grid>
         
     </Grid>
 </Page>

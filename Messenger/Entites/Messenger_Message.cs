@@ -23,6 +23,7 @@ namespace Messenger.Entites
         public Nullable<int> LastIdSenderUser { get; set; }
         public string LastNicknameSenderUser { get; set; }
 
+
         public string LastNicknameSenderUserTrim
         {
             get
@@ -52,6 +53,7 @@ namespace Messenger.Entites
                 }
             }
         }
+
 
         public virtual Messenger_Dialog Messenger_Dialog { get; set; }
         public virtual Messenger_Sticker Messenger_Sticker { get; set; }

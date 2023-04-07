@@ -36,5 +36,9 @@ namespace Messenger.Entites
         public virtual DbSet<Messenger_SavedPost> Messenger_SavedPost { get; set; }
         public virtual DbSet<Messenger_Sticker> Messenger_Sticker { get; set; }
         public virtual DbSet<Messenger_User> Messenger_User { get; set; }
+        public virtual DbSet<Messenger_Subscriber> Messenger_Subscriber { get; set; }
+        public virtual DbSet<Messenger_Band> Messenger_Band { get; set; }
+        public virtual DbSet<Messenger_RequestOfFriendship> Messenger_RequestOfFriendship { get; set; }
+        public virtual DbSet<Messenger_Specialization> Messenger_Specialization { get; set; }
     }
 }

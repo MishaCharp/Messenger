@@ -92,7 +92,7 @@
             <StackPanel Orientation="Vertical" Margin="0,20,0,0">
 
                 <Grid Margin="5">
-                    <TextBox VerticalAlignment="Center" MaxLength="29" HorizontalAlignment="Left" x:Name="NicknameBox" Width="220" Height="35" Margin="5" TextChanged="NicknameBoxTextChanged"/>
+                    <TextBox VerticalAlignment="Center" MaxLength="16" HorizontalAlignment="Left" x:Name="NicknameBox" Width="220" Height="35" Margin="5" TextChanged="NicknameBoxTextChanged"/>
                     <TextBlock x:Name="PlaceholderNickname" FontSize="18" IsHitTestVisible="False" Text="Никнейм" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" Foreground="#9599a5"/>
                 </Grid>
 

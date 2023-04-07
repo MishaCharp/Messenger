@@ -12,24 +12,20 @@ namespace Messenger.Entites
     using System;
     using System.Collections.Generic;
     
-    public partial class Messenger_Group
+    public partial class Messenger_Band
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Messenger_Group()
+        public Messenger_Band()
         {
-            this.Messenger_Post = new HashSet<Messenger_Post>();
-            this.Messenger_Subscriber = new HashSet<Messenger_Subscriber>();
+            this.Messenger_User = new HashSet<Messenger_User>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Title { get; set; }
-        public int IdOwner { get; set; }
+        public int IdSpecialization { get; set; }
+        public string Band { get; set; }
     
-        public virtual Messenger_User Messenger_User { get; set; }
+        public virtual Messenger_Specialization Messenger_Specialization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Messenger_Post> Messenger_Post { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Messenger_Subscriber> Messenger_Subscriber { get; set; }
+        public virtual ICollection<Messenger_User> Messenger_User { get; set; }
     }
 }
