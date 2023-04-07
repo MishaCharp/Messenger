@@ -25,9 +25,15 @@ namespace Messenger.Entites
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Messenger_Avatar> Messenger_Avatar { get; set; }
+        public virtual DbSet<Messenger_City> Messenger_City { get; set; }
+        public virtual DbSet<Messenger_Country> Messenger_Country { get; set; }
         public virtual DbSet<Messenger_Dialog> Messenger_Dialog { get; set; }
+        public virtual DbSet<Messenger_Friendship> Messenger_Friendship { get; set; }
+        public virtual DbSet<Messenger_Group> Messenger_Group { get; set; }
         public virtual DbSet<Messenger_Message> Messenger_Message { get; set; }
         public virtual DbSet<Messenger_Post> Messenger_Post { get; set; }
+        public virtual DbSet<Messenger_SavedPost> Messenger_SavedPost { get; set; }
         public virtual DbSet<Messenger_Sticker> Messenger_Sticker { get; set; }
         public virtual DbSet<Messenger_User> Messenger_User { get; set; }
     }

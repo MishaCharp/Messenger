@@ -13,10 +13,10 @@
             <RowDefinition/>
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <ListBox x:Name="DialogListBox">
+        <ListBox x:Name="DialogListBox" Background="DarkGray">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Cursor="Hand" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="1" Width="1120" Height="auto">
+                    <Border Cursor="Hand" Background="Black" BorderBrush="Black" BorderThickness="1" Width="1120" Height="auto">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>

@@ -4,17 +4,31 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5b5fcb61270a4cf6b13be779b4916c23" Name="Diagram1">
-        <EntityTypeShape EntityType="user2_dbModel.Messenger_Dialog" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="user2_dbModel.Messenger_Message" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="user2_dbModel.Messenger_Post" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="user2_dbModel.Messenger_Sticker" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="user2_dbModel.Messenger_User" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
-        <AssociationConnector Association="user2_dbModel.FK_Messenger_Dialog_Messenger_User" ManuallyRouted="false" />
-        <AssociationConnector Association="user2_dbModel.FK_Messenger_Dialog_Messenger_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="user2_dbModel.FK_Messenger_Message_Messenger_Dialog" ManuallyRouted="false" />
-        <AssociationConnector Association="user2_dbModel.FK_Messenger_Message_Messenger_Sticker" ManuallyRouted="false" />
-        <AssociationConnector Association="user2_dbModel.FK_Messenger_Post_Messenger_User" ManuallyRouted="false" />
+      <Diagram DiagramId="5b5fcb61270a4cf6b13be779b4916c23" Name="Diagram1" ZoomLevel="88">
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_Avatar" Width="1.5" PointX="3" PointY="1.875" />
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_City" Width="1.5" PointX="3" PointY="4.625" />
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_Country" Width="1.5" PointX="0.75" PointY="4.875" />
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_Dialog" Width="1.5" PointX="7.5" PointY="7.5" />
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_Friendship" Width="1.5" PointX="7.5" PointY="4.625" />
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_Group" Width="1.5" PointX="7.5" PointY="1.5" />
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_Message" Width="1.5" PointX="9.75" PointY="7.25" />
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_Post" Width="1.5" PointX="9.75" PointY="1.5" />
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_SavedPost" Width="1.5" PointX="12" PointY="3.5" />
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_Sticker" Width="1.5" PointX="7.5" PointY="10.875" />
+        <EntityTypeShape EntityType="user2_dbModel.Messenger_User" Width="1.5" PointX="5.25" PointY="3.75" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_User_Messenger_Avatar" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_City_Messenger_Country" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_User_Messenger_City" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_Dialog_Messenger_User" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_Dialog_Messenger_User1" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_Message_Messenger_Dialog" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_Friendship_Messenger_User" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_Friendship_Messenger_User1" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_Group_Messenger_User" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_Post_Messenger_Post" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_Message_Messenger_Sticker" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_SavedPost_Messenger_Post" />
+        <AssociationConnector Association="user2_dbModel.FK_Messenger_SavedPost_Messenger_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

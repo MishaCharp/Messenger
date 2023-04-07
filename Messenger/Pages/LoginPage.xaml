@@ -100,6 +100,8 @@
             </Grid>
 
             <Button Height="50" Margin="5" Content="Войти" Cursor="Hand" x:Name="LoginButton" Click="LoginButtonClick"/>
+
+            <TextBlock MouseLeftButtonDown="AddNewUserMouseLeftButtonDown" Text="Нет аккаунта? Зарегистрироваться" VerticalAlignment="Bottom" Foreground="#e7feff" HorizontalAlignment="Center" FontSize="16" Margin="10" TextDecorations="Underline" Cursor="Hand"/>
         </StackPanel>
         <TextBlock Text="Created by Misha" VerticalAlignment="Bottom" Foreground="#e7feff" HorizontalAlignment="Right" FontSize="16" FontFamily="/Messenger;component/Fonts/#WindCTT" Margin="10"/>
     </Grid>

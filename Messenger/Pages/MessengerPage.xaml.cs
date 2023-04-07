@@ -93,12 +93,6 @@ namespace Messenger.Pages
 
         int Counter = 0;
 
-        async void ResizePanel(object sender, MouseButtonEventArgs e)
-        {
-
-
-
-        }
 
         private async void TextBlockMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

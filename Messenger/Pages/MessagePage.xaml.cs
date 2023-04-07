@@ -24,9 +24,7 @@ namespace Messenger.Pages
 
         public List<Entites.Messenger_Dialog> dialogs { get; set; } = new List<Entites.Messenger_Dialog>();
 
-        DispatcherTimer timer = new DispatcherTimer
-        {
-            Interval = new TimeSpan(0, 0, 0, 0, 500),
+        DispatcherTimer timer = new DispatcherTimer{
             IsEnabled = true
         };
 
@@ -37,6 +35,7 @@ namespace Messenger.Pages
             {
                 dialogs = App.Context.Messenger_Dialog.Where(x => x.IdFirstUser == App.CurrentUser.Id || x.IdSecondUser == App.CurrentUser.Id).ToList();
                 MessageListBox.ItemsSource = dialogs;
+                timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
                 timer.Start();
                 timer.Tick += TimerTick;
             }
@@ -47,11 +46,14 @@ namespace Messenger.Pages
             
         }
 
+        public static Entites.user2_dbEntities1 _Context { get; set; } = null;
+
         private void TimerTick(object sender, EventArgs e)
         {
             try
             {
-                dialogs = App.Context.Messenger_Dialog.Where(x => x.IdFirstUser == App.CurrentUser.Id || x.IdSecondUser == App.CurrentUser.Id).ToList();
+                _Context = new Entites.user2_dbEntities1();
+                dialogs = _Context.Messenger_Dialog.Where(x => x.IdFirstUser == App.CurrentUser.Id || x.IdSecondUser == App.CurrentUser.Id).ToList();
                 MessageListBox.ItemsSource = dialogs;
             }
             catch (Exception ex)

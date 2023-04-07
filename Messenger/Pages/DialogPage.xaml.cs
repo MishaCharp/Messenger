@@ -44,10 +44,24 @@ namespace Messenger.Pages
             timer.Tick += TimerTick;
         }
 
+        int messagesCount = 0;
+
         private void TimerTick(object sender, EventArgs e)
         {
-            messages = App.Context.Messenger_Message.Where(x => x.IdDialog == CurrentIdDialog).ToList();
-            DialogListBox.ItemsSource = messages;
+            try
+            {
+                var messages = App.Context.Messenger_Message.Where(x => x.IdDialog == CurrentIdDialog).ToList();
+                if (messages.Count != messagesCount)
+                {
+                    DialogListBox.ItemsSource = messages;
+                    messagesCount = messages.Count;
+                }
+            }
+            catch
+            {
+
+            }
+
         }
 
         private void SendMessageButtonClick(object sender, RoutedEventArgs e)

@@ -11,7 +11,7 @@ namespace Messenger.Entites
 {
     using System;
     using System.Collections.Generic;
-    using System.Windows.Media;
+    using System.Drawing;
 
     public partial class Messenger_Message
     {
@@ -23,9 +23,11 @@ namespace Messenger.Entites
         public Nullable<int> LastIdSenderUser { get; set; }
         public string LastNicknameSenderUser { get; set; }
 
-        public string LastNicknameSenderUserTrim { get 
+        public string LastNicknameSenderUserTrim
+        {
+            get
             {
-                if(LastNicknameSenderUser != App.CurrentUser.Nickname)
+                if (LastNicknameSenderUser != App.CurrentUser.Nickname)
                 {
                     return LastNicknameSenderUser;
                 }
@@ -33,10 +35,12 @@ namespace Messenger.Entites
                 {
                     return "Я";
                 }
-            } 
+            }
         }
 
-        public Brush AccountColor { get
+        public Brush AccountColor
+        {
+            get
             {
                 if (App.CurrentUser.Id == LastIdSenderUser)
                 {
@@ -46,9 +50,8 @@ namespace Messenger.Entites
                 {
                     return Brushes.AntiqueWhite;
                 }
-            } 
+            }
         }
-
 
         public virtual Messenger_Dialog Messenger_Dialog { get; set; }
         public virtual Messenger_Sticker Messenger_Sticker { get; set; }

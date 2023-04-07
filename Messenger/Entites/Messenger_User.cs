@@ -11,7 +11,10 @@ namespace Messenger.Entites
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+    using System.Runtime.InteropServices.WindowsRuntime;
+    using System.Windows.Media;
+
     public partial class Messenger_User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,7 +22,10 @@ namespace Messenger.Entites
         {
             this.Messenger_Dialog = new HashSet<Messenger_Dialog>();
             this.Messenger_Dialog1 = new HashSet<Messenger_Dialog>();
-            this.Messenger_Post = new HashSet<Messenger_Post>();
+            this.Messenger_Friendship = new HashSet<Messenger_Friendship>();
+            this.Messenger_Friendship1 = new HashSet<Messenger_Friendship>();
+            this.Messenger_Group = new HashSet<Messenger_Group>();
+            this.Messenger_SavedPost = new HashSet<Messenger_SavedPost>();
         }
     
         public int Id { get; set; }
@@ -27,13 +33,30 @@ namespace Messenger.Entites
         public string Login { get; set; }
         public string Password { get; set; }
         public string Phone { get; set; }
-        public string ListIdFriends { get; set; }
+        public Nullable<int> IdAvatar { get; set; }
+
+        public ImageSource AvatarImageSource { get
+            {
+                    return App.avatars.FirstOrDefault(x => x.Key == IdAvatar).Value;       
+            }
+        }
+
+        public Nullable<int> IdCity { get; set; }
+        public string Description { get; set; }
     
+        public virtual Messenger_Avatar Messenger_Avatar { get; set; }
+        public virtual Messenger_City Messenger_City { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Messenger_Dialog> Messenger_Dialog { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Messenger_Dialog> Messenger_Dialog1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Messenger_Post> Messenger_Post { get; set; }
+        public virtual ICollection<Messenger_Friendship> Messenger_Friendship { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Messenger_Friendship> Messenger_Friendship1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Messenger_Group> Messenger_Group { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Messenger_SavedPost> Messenger_SavedPost { get; set; }
     }
 }

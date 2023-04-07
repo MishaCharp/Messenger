@@ -29,7 +29,14 @@ namespace Messenger
 
         private new void MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            try
+            {
+                this.DragMove();
+            }
+            catch(Exception ex)
+            {
+                new Windows.NewMessageBox(Window.GetWindow(this), "Ошибка", ex.Message).ShowDialog();
+            }
         }
     }
 }

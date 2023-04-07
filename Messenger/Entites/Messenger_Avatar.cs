@@ -12,22 +12,18 @@ namespace Messenger.Entites
     using System;
     using System.Collections.Generic;
     
-    public partial class Messenger_Post
+    public partial class Messenger_Avatar
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Messenger_Post()
+        public Messenger_Avatar()
         {
-            this.Messenger_SavedPost = new HashSet<Messenger_SavedPost>();
+            this.Messenger_User = new HashSet<Messenger_User>();
         }
     
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public byte[] Image { get; set; }
-        public int IdGroup { get; set; }
+        public string Avatar { get; set; }
     
-        public virtual Messenger_Group Messenger_Group { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Messenger_SavedPost> Messenger_SavedPost { get; set; }
+        public virtual ICollection<Messenger_User> Messenger_User { get; set; }
     }
 }

@@ -6,10 +6,12 @@
         xmlns:local="clr-namespace:Messenger"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1310" ResizeMode="NoResize" WindowStyle="None">
+    <Border BorderBrush="Silver" BorderThickness="1">
     <Grid Background="#1f2326" MouseLeftButtonDown="MouseLeftButtonDown">
         <Image Source="/Images/bg.jpg" Opacity="0.1"/>
 
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
 
     </Grid>
+    </Border>
 </Window>

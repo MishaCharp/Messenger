@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,12 +13,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AsyncAwaitBestPractices;
+using Messenger.Windows;
 
 namespace Messenger.Pages
 {
     /// <summary>
     /// Логика взаимодействия для LoginPage.xaml
     /// </summary>
+
     public partial class LoginPage : Page
     {
 
@@ -28,7 +32,10 @@ namespace Messenger.Pages
 
         private void LoginBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (LoginBox.Text.Length > 0)
+
+            var box = (TextBox)sender;
+
+            if (box.Text.Length > 0)
             {
                 PlaceholderLogin.Visibility = Visibility.Hidden;
             }
@@ -52,24 +59,40 @@ namespace Messenger.Pages
 
         private void LoginButtonClick(object sender, RoutedEventArgs e)
         {
-            if(LoginBox.Text!="" && PasswordBox.Password!="")
+            try
             {
-                var user = App.Context.Messenger_User.Where(x => x.Login == LoginBox.Text && x.Password == PasswordBox.Password).FirstOrDefault();
-                if (user != null)
+                if (LoginBox.Text != "" && PasswordBox.Password != "")
                 {
-                    App.CurrentUser = user;
-                    NavigationService.Navigate(new MessengerPage());
+                    var user = App.Context.Messenger_User.Where(x => x.Login == LoginBox.Text && x.Password == PasswordBox.Password).FirstOrDefault();
+                    if (user != null)
+                    {
+                        App.CurrentUser = user;
+                        NavigationService.Navigate(new MessengerPage());
+                    }
+                    else
+                    {
+                        new Windows.NewMessageBox(Window.GetWindow(this), "Ошибка", "Указанный пользователь не найден!").ShowDialog();
+                    }
+
                 }
                 else
                 {
-                    new Windows.NewMessageBox(Window.GetWindow(this), "Ошибка", "Указанный пользователь не найден!").ShowDialog();
+                    new Windows.NewMessageBox(Window.GetWindow(this), "Ошибка", "Все поля должны быть заполнены!").ShowDialog();
                 }
-                
             }
-            else
+            catch (Exception ex)
             {
-                new Windows.NewMessageBox(Window.GetWindow(this),"Ошибка","Все поля должны быть заполнены!").ShowDialog();
+                new Windows.NewMessageBox(Window.GetWindow(this), "Ошибка", ex.Message).ShowDialog();
+
             }
         }
+
+
+
+            private void AddNewUserMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+            {
+                NavigationService.Navigate(new RegistrationPage());
+            }
+
     }
 }

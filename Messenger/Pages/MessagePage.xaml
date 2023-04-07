@@ -8,26 +8,69 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MessagePage">
 
+    <Page.Resources>
+        
+    </Page.Resources>
+    
     <Grid>
-        <ListBox x:Name="MessageListBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListBox.ItemsPanel>
+        <ListView x:Name="MessageListBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent" Margin="10" BorderThickness="0">
+            <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Vertical" HorizontalAlignment="Center"/>
                 </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border x:Name="Bd"
+                            SnapsToDevicePixels="true"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Bd" Property="BorderBrush" Value="Silver" />
+                                        <Setter TargetName="Bd" Property="CornerRadius" Value="10,5,10,5" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border MouseLeftButtonDown="DialogMouseLeftButtonDown" Cursor="Hand" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="1" Width="1120" Height="70">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="1100">
-                            <DockPanel VerticalAlignment="Top">
-                                <TextBlock Text="{Binding Messenger_User.Nickname}" HorizontalAlignment="Left"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Messenger_User1.Nickname}" HorizontalAlignment="Right"/>
-                            </DockPanel>
-                                <TextBlock Text="{Binding LastMessage}" Background="AntiqueWhite" Width="1100" TextAlignment="Center"/>
-                        </StackPanel>
+                    <Border x:Name="BorderItem" Margin="4" MouseLeftButtonDown="DialogMouseLeftButtonDown" Cursor="Hand" Background="#40536d" BorderBrush="Black" CornerRadius="10,5,10,5" BorderThickness="1" Width="1000" Height="70">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="80"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Messenger_User.Nickname}" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0"/>
+                            <Border Width="40" Height="40" CornerRadius="20" BorderThickness="1" BorderBrush="Black" Grid.Row="1" Grid.Column="0" Margin="0,-20,0,0">
+                                <Image Source="{Binding Messenger_User.AvatarImageSource}"/>
+                            </Border>
+                            <Border Width="40" Height="40" CornerRadius="20" BorderThickness="1" BorderBrush="Black" Grid.Row="1" Grid.Column="2" Margin="0,-20,0,0">
+                                <Image Source="{Binding Messenger_User1.AvatarImageSource}"/>
+                            </Border>
+                            <TextBlock Text="{Binding Messenger_User1.Nickname}" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="0"/>
+                            <TextBlock Text="{Binding LastMessage}" Background="#2c476d" TextAlignment="Center" FontSize="16" Grid.Column="1" Grid.RowSpan="2"/>
+                        </Grid>
                     </Border>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>
