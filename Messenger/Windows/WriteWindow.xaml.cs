@@ -50,6 +50,7 @@ namespace Messenger.Windows
                     });
                     dialog.LastMessage = MessageTextBox.Text;
                     App.Context.SaveChanges();
+                    this.Close();
                 }
                 else
                 {

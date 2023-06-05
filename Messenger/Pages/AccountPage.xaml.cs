@@ -87,8 +87,6 @@ namespace Messenger.Pages
 
         private void EditAccountButtonClick(object sender, RoutedEventArgs e)
         {
-
-
             if (NicknameBox.Text != "")
             {
 
@@ -106,7 +104,7 @@ namespace Messenger.Pages
 
                                 if (DescriptionBox.Text != "")
                                 {
-
+                                    #region
                                     App.CurrentUser.Nickname = NicknameBox.Text;
                                     App.CurrentUser.Login = LoginBox.Text;
                                     App.CurrentUser.Password = PasswordBox.Password;
@@ -123,7 +121,7 @@ namespace Messenger.Pages
                                     EditAccountGrid.Visibility = Visibility.Hidden;
                                     RefreshEditingData();
                                     App.AnimateBorderOpacity(AccountGrid);
-
+                                    #endregion
                                 }
                                 else
                                 {

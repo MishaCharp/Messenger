@@ -12,6 +12,7 @@ namespace Messenger.Entites
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Windows.Media;
 
     public partial class Messenger_Message
     {
@@ -22,6 +23,21 @@ namespace Messenger.Entites
         public System.DateTime Time { get; set; }
         public Nullable<int> LastIdSenderUser { get; set; }
         public string LastNicknameSenderUser { get; set; }
+
+
+        public System.Windows.Media.Brush BgColor
+        {
+            get
+            {
+                string colorString = LastNicknameSenderUserTrim == "Я" ? "#687e9c" : "#40536d"; // Здесь можно задать нужные цвета в формате "#RRGGBB"
+
+                System.Windows.Media.Color color = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(colorString);
+                SolidColorBrush brush = new SolidColorBrush(color);
+
+                return brush;
+            }
+        }
+
 
 
         public string LastNicknameSenderUserTrim
@@ -39,17 +55,17 @@ namespace Messenger.Entites
             }
         }
 
-        public Brush AccountColor
+        public System.Windows.Media.Brush AccountColor
         {
             get
             {
                 if (App.CurrentUser.Id == LastIdSenderUser)
                 {
-                    return Brushes.LightBlue;
+                    return System.Windows.Media.Brushes.LightBlue;
                 }
                 else
                 {
-                    return Brushes.AntiqueWhite;
+                    return System.Windows.Media.Brushes.LightBlue;
                 }
             }
         }

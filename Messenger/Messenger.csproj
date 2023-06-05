@@ -40,6 +40,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>kandinsky-download-1685980134906.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AsyncAwaitBestPractices, Version=6.0.5.0, Culture=neutral, PublicKeyToken=532360cfd341384d, processorArchitecture=MSIL">
       <HintPath>..\packages\AsyncAwaitBestPractices.6.0.6\lib\netstandard2.0\AsyncAwaitBestPractices.dll</HintPath>
@@ -318,6 +321,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Resource Include="kandinsky-download-1685980134906.ico" />
     <Resource Include="Images\group.png" />
     <Resource Include="Images\phone.png" />
     <Resource Include="Images\location.png" />

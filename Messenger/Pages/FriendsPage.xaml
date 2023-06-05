@@ -131,70 +131,66 @@
             <TextBlock x:Name="ButtonText" Text="Поиск друзей" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
         <Grid x:Name="MyFriendsGrid" Visibility="Visible">
-            <StackPanel Grid.Row="0" Orientation="Vertical" Height="500">
-
-                <ListView x:Name="FriendsListView" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Background="Transparent" Margin="10" BorderThickness="0">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Vertical" HorizontalAlignment="Center"/>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Border BorderBrush="AliceBlue" BorderThickness="1" Width="550" Height="170" Margin="10" Padding="10">
-                                <StackPanel Orientation="Vertical">
+            <ListView Height="500" x:Name="FriendsListView" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Background="Transparent" Margin="10" BorderThickness="0">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Vertical" HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="AliceBlue" BorderThickness="1" Width="550" Height="170" Margin="10" Padding="10">
+                            <StackPanel Orientation="Vertical">
+                                <Grid>
                                     <Grid>
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition/>
-                                                <RowDefinition Height="50"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100"/>
-                                                <ColumnDefinition/>
-                                            </Grid.ColumnDefinitions>
-                                            <Border Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Width="100" Height="100" CornerRadius="10" BorderThickness="1" BorderBrush="Black" Padding="15">
-                                                <Border.Background>
-                                                    <SolidColorBrush Color="#2c476d" Opacity="0.6"/>
-                                                </Border.Background>
-                                                <Image Source="{Binding AvatarImageSource}"/>
-                                            </Border>
-                                            <TextBlock Foreground="#e7feff" FontSize="20" Grid.Row="1" Text="Написать" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" TextDecorations="Underline" MouseLeftButtonDown="WriteMessageTextMouseLeftButtonDown"/>
-                                            <StackPanel Orientation="Vertical" Grid.RowSpan="2" Grid.Column="1">
-                                                <TextBlock Text="{Binding Nickname}" Foreground="#71aaeb" TextAlignment="Center" FontSize="24"/>
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <TextBlock Foreground="#e7feff" Text="{Binding Surname}"/>
-                                                    <TextBlock Foreground="#e7feff" Text=" "/>
-                                                    <TextBlock Foreground="#e7feff" Text="{Binding Name}"/>
-                                                    <TextBlock Foreground="#e7feff" Text=" "/>
-                                                    <TextBlock Foreground="#e7feff" Text="{Binding Patronymic}"/>
-                                                </StackPanel>
-                                                <TextBlock HorizontalAlignment="Center"  Foreground="#e7feff" Text="{Binding Messenger_Band.Band}"/>
-                                                <StackPanel Orientation="Vertical">
-                                                    <Border Margin="5,0,0,0" x:Name="CountryPanel" Height="40" HorizontalAlignment="Left">
-                                                        <StackPanel  Orientation="Horizontal">
-                                                            <Image Source="/Images/location.png" Width="30" Height="30"/>
-                                                            <TextBlock Name="CountryTextBlock" Text="Россия" Height="20" FontSize="14" Foreground="#e7feff" Margin="8"/>
-                                                        </StackPanel>
-                                                    </Border>
-
-                                                    <Border x:Name="PhonePanel" Height="40" HorizontalAlignment="Left">
-                                                        <StackPanel  Orientation="Horizontal">
-                                                            <Image Source="/Images/phone.png" Width="30" Height="30" Margin="5,0,0,0"/>
-                                                            <TextBlock Name="PhoneTextBlock" Text="89201215506" Height="20" FontSize="14" Foreground="#e7feff" Margin="8"/>
-                                                        </StackPanel>
-                                                    </Border>
-                                                </StackPanel>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="50"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Width="100" Height="100" CornerRadius="10" BorderThickness="1" BorderBrush="Black" Padding="15">
+                                            <Border.Background>
+                                                <SolidColorBrush Color="#2c476d" Opacity="0.6"/>
+                                            </Border.Background>
+                                            <Image Source="{Binding AvatarImageSource}"/>
+                                        </Border>
+                                        <TextBlock Foreground="#e7feff" FontSize="20" Grid.Row="1" Text="Написать" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" TextDecorations="Underline" MouseLeftButtonDown="WriteMessageTextMouseLeftButtonDown"/>
+                                        <StackPanel Orientation="Vertical" Grid.RowSpan="2" Grid.Column="1">
+                                            <TextBlock Text="{Binding Nickname}" Foreground="#71aaeb" TextAlignment="Center" FontSize="24"/>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <TextBlock Foreground="#e7feff" Text="{Binding Surname}"/>
+                                                <TextBlock Foreground="#e7feff" Text=" "/>
+                                                <TextBlock Foreground="#e7feff" Text="{Binding Name}"/>
+                                                <TextBlock Foreground="#e7feff" Text=" "/>
+                                                <TextBlock Foreground="#e7feff" Text="{Binding Patronymic}"/>
                                             </StackPanel>
-                                        </Grid>
-                                    </Grid>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                                            <TextBlock HorizontalAlignment="Center"  Foreground="#e7feff" Text="{Binding Messenger_Band.Band}"/>
+                                            <StackPanel Orientation="Vertical">
+                                                <Border Margin="5,0,0,0" x:Name="CountryPanel" Height="40" HorizontalAlignment="Left">
+                                                    <StackPanel  Orientation="Horizontal">
+                                                        <Image Source="/Images/location.png" Width="30" Height="30"/>
+                                                        <TextBlock Name="CountryTextBlock" Text="Россия" Height="20" FontSize="14" Foreground="#e7feff" Margin="8"/>
+                                                    </StackPanel>
+                                                </Border>
 
-            </StackPanel>
+                                                <Border x:Name="PhonePanel" Height="40" HorizontalAlignment="Left">
+                                                    <StackPanel  Orientation="Horizontal">
+                                                        <Image Source="/Images/phone.png" Width="30" Height="30" Margin="5,0,0,0"/>
+                                                        <TextBlock Name="PhoneTextBlock" Text="89201215506" Height="20" FontSize="14" Foreground="#e7feff" Margin="8"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
         <Grid x:Name="SearchFriendsGrid" Visibility="Hidden">
             <Grid.RowDefinitions>

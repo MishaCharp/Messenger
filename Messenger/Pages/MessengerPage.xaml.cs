@@ -102,7 +102,7 @@ namespace Messenger.Pages
             double step = (columnDefinition.Width.Value - targetWidth) / 10; // количество пикселей, на которые нужно уменьшить ColumnDefinition на каждой итерации
             if (Counter % 2 == 0)
             {
-                targetWidth = 70;
+                targetWidth = 84;
                 while (columnDefinition.Width.Value > targetWidth)
                 {
                     columnDefinition.Width = new GridLength(columnDefinition.Width.Value - step);

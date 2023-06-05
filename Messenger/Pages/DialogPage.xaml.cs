@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Messenger.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,6 +43,11 @@ namespace Messenger.Pages
             DialogListBox.ItemsSource = messages;
             timer.Start();
             timer.Tick += TimerTick;
+
+            var lastItem = DialogListBox.Items[DialogListBox.Items.Count - 1];
+
+            DialogListBox.ScrollIntoView(lastItem);
+
         }
 
         int messagesCount = 0;
@@ -64,6 +70,27 @@ namespace Messenger.Pages
 
         }
 
+        void SendMessage(string message)
+        {
+            App.Context.Messenger_Dialog.Where(x => x.Id == CurrentIdDialog).FirstOrDefault().LastMessage = message;
+            App.Context.Messenger_Message.Add(new Entites.Messenger_Message
+            {
+                IdDialog = CurrentIdDialog,
+                Message = message,
+                LastIdSenderUser = App.CurrentUser.Id,
+                LastNicknameSenderUser = App.CurrentUser.Nickname,
+                Time = DateTime.Now
+            });
+            App.Context.SaveChanges();
+
+            MessageText.Text = "";
+
+            var lastItem = DialogListBox.Items[DialogListBox.Items.Count - 1];
+
+            DialogListBox.ScrollIntoView(lastItem);
+
+        }
+
         private void SendMessageButtonClick(object sender, RoutedEventArgs e)
         {
 
@@ -71,16 +98,27 @@ namespace Messenger.Pages
 
             if (message != "")
             {
-                App.Context.Messenger_Dialog.Where(x=>x.Id ==  CurrentIdDialog).FirstOrDefault().LastMessage = message;
-                App.Context.Messenger_Message.Add(new Entites.Messenger_Message
+                SendMessage(message);
+            }
+            else
+            {
+                new NewMessageBox(App.Current.MainWindow, "Введите сообщение!").ShowDialog();
+            }
+        }
+
+        private void IsEnterClicked(object sender, KeyEventArgs e)
+        {
+
+            var message = MessageText.Text;
+
+            if (e.Key == Key.Enter)
+            {
+
+                if (message != "")
                 {
-                    IdDialog = CurrentIdDialog,
-                    Message = message,
-                    LastIdSenderUser = App.CurrentUser.Id,
-                    LastNicknameSenderUser = App.CurrentUser.Nickname,
-                    Time = DateTime.Now
-                });
-                App.Context.SaveChanges();
+                    SendMessage(message);
+                }
+
             }
         }
     }

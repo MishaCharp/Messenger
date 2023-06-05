@@ -54,7 +54,7 @@
             </DockPanel>
 
                 <DockPanel MouseLeftButtonDown="IconMouseLeftButtonDown" Margin="10" x:Name="FriendsPanel" Width="160">
-                    <Border Width="50" Height="50" BorderThickness="0" BorderBrush="Black">
+                    <Border Width="49" Height="50" BorderThickness="0" BorderBrush="Black">
                         <Image Source="/Images/friendss.png"/>
                     </Border>
                     <TextBlock Text="Друзья" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"/>
