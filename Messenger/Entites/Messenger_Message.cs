@@ -11,7 +11,6 @@ namespace Messenger.Entites
 {
     using System;
     using System.Collections.Generic;
-    using System.Drawing;
     using System.Windows.Media;
 
     public partial class Messenger_Message
@@ -23,7 +22,6 @@ namespace Messenger.Entites
         public System.DateTime Time { get; set; }
         public Nullable<int> LastIdSenderUser { get; set; }
         public string LastNicknameSenderUser { get; set; }
-
 
         public System.Windows.Media.Brush BgColor
         {
@@ -69,7 +67,6 @@ namespace Messenger.Entites
                 }
             }
         }
-
 
         public virtual Messenger_Dialog Messenger_Dialog { get; set; }
         public virtual Messenger_Sticker Messenger_Sticker { get; set; }

@@ -3,12 +3,45 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Messenger.Pages"
+      xmlns:local="clr-namespace:Messenger.Pages" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SavedPage">
 
     <Grid>
-        
+        <ListView x:Name="PostLView">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel HorizontalAlignment="Center" Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="650" Height="290" Margin="10" CornerRadius="10" BorderThickness="3" BorderBrush="#002060" Padding="10">
+                        <Border.Background>
+                            <SolidColorBrush Color="#79a08c" Opacity="0.8"/>
+                        </Border.Background>
+                        <Grid>
+
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="200"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Messenger_User.Login}" Grid.Row="0" HorizontalAlignment="Left" TextDecorations="Underline"/>
+                            <TextBlock Text="{Binding Messenger_Post.Title}" Grid.Row="0" HorizontalAlignment="Center" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Messenger_Post.Description}" TextWrapping="Wrap" Grid.Row="1"/>
+                            <TextBlock Text="{Binding Messenger_Post.DateTime, StringFormat={}{0:hh:mm dd.MM.yyyy}}" TextWrapping="Wrap" Grid.Row="2" HorizontalAlignment="Right"/>
+
+                            <Button Click="DeleteClick" Style="{DynamicResource MaterialDesignFloatingActionDarkButton}" Grid.Row="2" HorizontalAlignment="Left" Width="30" Height="30" Margin="0 -35 0 0">
+                                <materialDesign:PackIcon Kind="DeleteAlert"/>
+                            </Button>
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

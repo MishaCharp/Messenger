@@ -20,9 +20,38 @@ namespace Messenger.Pages
     /// </summary>
     public partial class SavedPage : Page
     {
+
+        List<Entites.Messenger_SavedPost> postList = new List<Entites.Messenger_SavedPost>();
+
+
         public SavedPage()
         {
             InitializeComponent();
+
+            RefreshData();
         }
+
+        private void DeleteClick(object sender, RoutedEventArgs e)
+        {
+
+            var Post = (sender as Button).DataContext as Entites.Messenger_SavedPost;
+
+            App.Context.Messenger_SavedPost.Remove(Post);
+
+            App.Context.SaveChanges();
+
+            RefreshData();
+
+        }
+
+
+        private void RefreshData()
+        {
+            postList = App.Context.Messenger_SavedPost.Where(x=>x.IdUser==App.CurrentUser.Id).OrderByDescending(x => x.Messenger_Post.DateTime).ToList();
+            PostLView.ItemsSource = null;
+            PostLView.ItemsSource = postList;
+        }
+
+
     }
 }

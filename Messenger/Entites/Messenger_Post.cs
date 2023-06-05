@@ -24,10 +24,11 @@ namespace Messenger.Entites
         public string Title { get; set; }
         public string Description { get; set; }
         public byte[] Image { get; set; }
-        public int IdGroup { get; set; }
+        public int IdUser { get; set; }
+        public Nullable<System.DateTime> DateTime { get; set; }
     
-        public virtual Messenger_Group Messenger_Group { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Messenger_SavedPost> Messenger_SavedPost { get; set; }
+        public virtual Messenger_User Messenger_User { get; set; }
     }
 }

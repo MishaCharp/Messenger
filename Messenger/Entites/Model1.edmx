@@ -53,15 +53,6 @@
           <Property Name="IdSecondUser" Type="int" Nullable="false" />
           <Property Name="DateTimeOfFriendship" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="Messenger_Group">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Title" Type="nvarchar(max)" />
-          <Property Name="IdOwner" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Messenger_Message">
           <Key>
             <PropertyRef Name="Id" />
@@ -82,7 +73,8 @@
           <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Image" Type="image" />
-          <Property Name="IdGroup" Type="int" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Messenger_RequestOfFriendship">
           <Key>
@@ -91,6 +83,13 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SendeUserrId" Type="int" Nullable="false" />
           <Property Name="RecieverUserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Messenger_Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Messenger_SavedPost">
           <Key>
@@ -114,18 +113,6 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Image" Type="image" Nullable="false" />
         </EntityType>
-        <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "user2_db.dbo.Messenger_Subscriber" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
-        <EntityType Name="Messenger_Subscriber">
-          <Key>
-            <PropertyRef Name="IdUser" />
-            <PropertyRef Name="IdGroup" />
-            <PropertyRef Name="DateOfSubscribe" />
-          </Key>
-          <Property Name="IdUser" Type="int" Nullable="false" />
-          <Property Name="IdGroup" Type="int" Nullable="false" />
-          <Property Name="DateOfSubscribe" Type="datetime" Nullable="false" />
-        </EntityType>
         <EntityType Name="Messenger_User">
           <Key>
             <PropertyRef Name="Id" />
@@ -142,6 +129,7 @@
           <Property Name="IdCity" Type="int" />
           <Property Name="IdBand" Type="int" />
           <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IdRole" Type="int" />
         </EntityType>
         <Association Name="FK_Messenger_Band_Messenger_Specialization">
           <End Role="Messenger_Specialization" Type="Self.Messenger_Specialization" Multiplicity="1" />
@@ -215,18 +203,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Messenger_Group_Messenger_User">
-          <End Role="Messenger_User" Type="Self.Messenger_User" Multiplicity="1" />
-          <End Role="Messenger_Group" Type="Self.Messenger_Group" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Messenger_User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Messenger_Group">
-              <PropertyRef Name="IdOwner" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Messenger_Message_Messenger_Dialog">
           <End Role="Messenger_Dialog" Type="Self.Messenger_Dialog" Multiplicity="1" />
           <End Role="Messenger_Message" Type="Self.Messenger_Message" Multiplicity="*" />
@@ -251,15 +227,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Messenger_Post_Messenger_Post">
-          <End Role="Messenger_Group" Type="Self.Messenger_Group" Multiplicity="1" />
+        <Association Name="FK_Messenger_Post_Messenger_User">
+          <End Role="Messenger_User" Type="Self.Messenger_User" Multiplicity="1" />
           <End Role="Messenger_Post" Type="Self.Messenger_Post" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Messenger_Group">
+            <Principal Role="Messenger_User">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Messenger_Post">
-              <PropertyRef Name="IdGroup" />
+              <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -311,30 +287,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Messenger_Subscriber_Messenger_Group">
-          <End Role="Messenger_Group" Type="Self.Messenger_Group" Multiplicity="1" />
-          <End Role="Messenger_Subscriber" Type="Self.Messenger_Subscriber" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Messenger_Group">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Messenger_Subscriber">
-              <PropertyRef Name="IdGroup" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Messenger_Subscriber_Messenger_User">
-          <End Role="Messenger_User" Type="Self.Messenger_User" Multiplicity="1" />
-          <End Role="Messenger_Subscriber" Type="Self.Messenger_Subscriber" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Messenger_User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Messenger_Subscriber">
-              <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Messenger_User_Messenger_Avatar">
           <End Role="Messenger_Avatar" Type="Self.Messenger_Avatar" Multiplicity="0..1" />
           <End Role="Messenger_User" Type="Self.Messenger_User" Multiplicity="*" />
@@ -359,6 +311,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Messenger_User_Messenger_Role">
+          <End Role="Messenger_Role" Type="Self.Messenger_Role" Multiplicity="0..1" />
+          <End Role="Messenger_User" Type="Self.Messenger_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messenger_Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messenger_User">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Messenger_User_Messenger_User">
           <End Role="Messenger_Band" Type="Self.Messenger_Band" Multiplicity="0..1" />
           <End Role="Messenger_User" Type="Self.Messenger_User" Multiplicity="*" />
@@ -378,21 +342,14 @@
           <EntitySet Name="Messenger_Country" EntityType="Self.Messenger_Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messenger_Dialog" EntityType="Self.Messenger_Dialog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messenger_Friendship" EntityType="Self.Messenger_Friendship" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Messenger_Group" EntityType="Self.Messenger_Group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messenger_Message" EntityType="Self.Messenger_Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messenger_Post" EntityType="Self.Messenger_Post" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messenger_RequestOfFriendship" EntityType="Self.Messenger_RequestOfFriendship" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messenger_Role" EntityType="Self.Messenger_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messenger_SavedPost" EntityType="Self.Messenger_SavedPost" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messenger_Specialization" EntityType="Self.Messenger_Specialization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messenger_Sticker" EntityType="Self.Messenger_Sticker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messenger_User" EntityType="Self.Messenger_User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Messenger_Subscriber" EntityType="Self.Messenger_Subscriber" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Messenger_Subscriber].[IdUser] AS [IdUser], 
-    [Messenger_Subscriber].[IdGroup] AS [IdGroup], 
-    [Messenger_Subscriber].[DateOfSubscribe] AS [DateOfSubscribe]
-    FROM [dbo].[Messenger_Subscriber] AS [Messenger_Subscriber]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Messenger_Band_Messenger_Specialization" Association="Self.FK_Messenger_Band_Messenger_Specialization">
             <End Role="Messenger_Specialization" EntitySet="Messenger_Specialization" />
             <End Role="Messenger_Band" EntitySet="Messenger_Band" />
@@ -417,10 +374,6 @@
             <End Role="Messenger_User" EntitySet="Messenger_User" />
             <End Role="Messenger_Friendship" EntitySet="Messenger_Friendship" />
           </AssociationSet>
-          <AssociationSet Name="FK_Messenger_Group_Messenger_User" Association="Self.FK_Messenger_Group_Messenger_User">
-            <End Role="Messenger_User" EntitySet="Messenger_User" />
-            <End Role="Messenger_Group" EntitySet="Messenger_Group" />
-          </AssociationSet>
           <AssociationSet Name="FK_Messenger_Message_Messenger_Dialog" Association="Self.FK_Messenger_Message_Messenger_Dialog">
             <End Role="Messenger_Dialog" EntitySet="Messenger_Dialog" />
             <End Role="Messenger_Message" EntitySet="Messenger_Message" />
@@ -429,8 +382,8 @@
             <End Role="Messenger_Sticker" EntitySet="Messenger_Sticker" />
             <End Role="Messenger_Message" EntitySet="Messenger_Message" />
           </AssociationSet>
-          <AssociationSet Name="FK_Messenger_Post_Messenger_Post" Association="Self.FK_Messenger_Post_Messenger_Post">
-            <End Role="Messenger_Group" EntitySet="Messenger_Group" />
+          <AssociationSet Name="FK_Messenger_Post_Messenger_User" Association="Self.FK_Messenger_Post_Messenger_User">
+            <End Role="Messenger_User" EntitySet="Messenger_User" />
             <End Role="Messenger_Post" EntitySet="Messenger_Post" />
           </AssociationSet>
           <AssociationSet Name="FK_Messenger_RequestOfFriendship_Messenger_User" Association="Self.FK_Messenger_RequestOfFriendship_Messenger_User">
@@ -449,20 +402,16 @@
             <End Role="Messenger_User" EntitySet="Messenger_User" />
             <End Role="Messenger_SavedPost" EntitySet="Messenger_SavedPost" />
           </AssociationSet>
-          <AssociationSet Name="FK_Messenger_Subscriber_Messenger_Group" Association="Self.FK_Messenger_Subscriber_Messenger_Group">
-            <End Role="Messenger_Group" EntitySet="Messenger_Group" />
-            <End Role="Messenger_Subscriber" EntitySet="Messenger_Subscriber" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Messenger_Subscriber_Messenger_User" Association="Self.FK_Messenger_Subscriber_Messenger_User">
-            <End Role="Messenger_User" EntitySet="Messenger_User" />
-            <End Role="Messenger_Subscriber" EntitySet="Messenger_Subscriber" />
-          </AssociationSet>
           <AssociationSet Name="FK_Messenger_User_Messenger_Avatar" Association="Self.FK_Messenger_User_Messenger_Avatar">
             <End Role="Messenger_Avatar" EntitySet="Messenger_Avatar" />
             <End Role="Messenger_User" EntitySet="Messenger_User" />
           </AssociationSet>
           <AssociationSet Name="FK_Messenger_User_Messenger_City" Association="Self.FK_Messenger_User_Messenger_City">
             <End Role="Messenger_City" EntitySet="Messenger_City" />
+            <End Role="Messenger_User" EntitySet="Messenger_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messenger_User_Messenger_Role" Association="Self.FK_Messenger_User_Messenger_Role">
+            <End Role="Messenger_Role" EntitySet="Messenger_Role" />
             <End Role="Messenger_User" EntitySet="Messenger_User" />
           </AssociationSet>
           <AssociationSet Name="FK_Messenger_User_Messenger_User" Association="Self.FK_Messenger_User_Messenger_User">
@@ -480,7 +429,6 @@
           <EntitySet Name="Messenger_Country" EntityType="user2_dbModel.Messenger_Country" />
           <EntitySet Name="Messenger_Dialog" EntityType="user2_dbModel.Messenger_Dialog" />
           <EntitySet Name="Messenger_Friendship" EntityType="user2_dbModel.Messenger_Friendship" />
-          <EntitySet Name="Messenger_Group" EntityType="user2_dbModel.Messenger_Group" />
           <EntitySet Name="Messenger_Message" EntityType="user2_dbModel.Messenger_Message" />
           <EntitySet Name="Messenger_Post" EntityType="user2_dbModel.Messenger_Post" />
           <EntitySet Name="Messenger_SavedPost" EntityType="user2_dbModel.Messenger_SavedPost" />
@@ -518,14 +466,6 @@
             <End Role="Messenger_User" EntitySet="Messenger_User" />
             <End Role="Messenger_Friendship" EntitySet="Messenger_Friendship" />
           </AssociationSet>
-          <AssociationSet Name="FK_Messenger_Group_Messenger_User" Association="user2_dbModel.FK_Messenger_Group_Messenger_User">
-            <End Role="Messenger_User" EntitySet="Messenger_User" />
-            <End Role="Messenger_Group" EntitySet="Messenger_Group" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Messenger_Post_Messenger_Post" Association="user2_dbModel.FK_Messenger_Post_Messenger_Post">
-            <End Role="Messenger_Group" EntitySet="Messenger_Group" />
-            <End Role="Messenger_Post" EntitySet="Messenger_Post" />
-          </AssociationSet>
           <AssociationSet Name="FK_Messenger_Message_Messenger_Sticker" Association="user2_dbModel.FK_Messenger_Message_Messenger_Sticker">
             <End Role="Messenger_Sticker" EntitySet="Messenger_Sticker" />
             <End Role="Messenger_Message" EntitySet="Messenger_Message" />
@@ -537,15 +477,6 @@
           <AssociationSet Name="FK_Messenger_SavedPost_Messenger_User" Association="user2_dbModel.FK_Messenger_SavedPost_Messenger_User">
             <End Role="Messenger_User" EntitySet="Messenger_User" />
             <End Role="Messenger_SavedPost" EntitySet="Messenger_SavedPost" />
-          </AssociationSet>
-          <EntitySet Name="Messenger_Subscriber" EntityType="user2_dbModel.Messenger_Subscriber" />
-          <AssociationSet Name="FK_Messenger_Subscriber_Messenger_Group" Association="user2_dbModel.FK_Messenger_Subscriber_Messenger_Group">
-            <End Role="Messenger_Group" EntitySet="Messenger_Group" />
-            <End Role="Messenger_Subscriber" EntitySet="Messenger_Subscriber" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Messenger_Subscriber_Messenger_User" Association="user2_dbModel.FK_Messenger_Subscriber_Messenger_User">
-            <End Role="Messenger_User" EntitySet="Messenger_User" />
-            <End Role="Messenger_Subscriber" EntitySet="Messenger_Subscriber" />
           </AssociationSet>
           <EntitySet Name="Messenger_Band" EntityType="user2_dbModel.Messenger_Band" />
           <EntitySet Name="Messenger_RequestOfFriendship" EntityType="user2_dbModel.Messenger_RequestOfFriendship" />
@@ -565,6 +496,15 @@
           <AssociationSet Name="FK_Messenger_RequestOfFriendship_Messenger_User1" Association="user2_dbModel.FK_Messenger_RequestOfFriendship_Messenger_User1">
             <End Role="Messenger_User" EntitySet="Messenger_User" />
             <End Role="Messenger_RequestOfFriendship" EntitySet="Messenger_RequestOfFriendship" />
+          </AssociationSet>
+          <EntitySet Name="Messenger_Role" EntityType="user2_dbModel.Messenger_Role" />
+          <AssociationSet Name="FK_Messenger_Post_Messenger_User" Association="user2_dbModel.FK_Messenger_Post_Messenger_User">
+            <End Role="Messenger_User" EntitySet="Messenger_User" />
+            <End Role="Messenger_Post" EntitySet="Messenger_Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messenger_User_Messenger_Role" Association="user2_dbModel.FK_Messenger_User_Messenger_Role">
+            <End Role="Messenger_Role" EntitySet="Messenger_Role" />
+            <End Role="Messenger_User" EntitySet="Messenger_User" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Messenger_Avatar">
@@ -616,18 +556,6 @@
           <NavigationProperty Name="Messenger_User" Relationship="user2_dbModel.FK_Messenger_Friendship_Messenger_User" FromRole="Messenger_Friendship" ToRole="Messenger_User" />
           <NavigationProperty Name="Messenger_User1" Relationship="user2_dbModel.FK_Messenger_Friendship_Messenger_User1" FromRole="Messenger_Friendship" ToRole="Messenger_User" />
         </EntityType>
-        <EntityType Name="Messenger_Group">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IdOwner" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Messenger_User" Relationship="user2_dbModel.FK_Messenger_Group_Messenger_User" FromRole="Messenger_Group" ToRole="Messenger_User" />
-          <NavigationProperty Name="Messenger_Post" Relationship="user2_dbModel.FK_Messenger_Post_Messenger_Post" FromRole="Messenger_Group" ToRole="Messenger_Post" />
-          <NavigationProperty Name="Messenger_Subscriber" Relationship="user2_dbModel.FK_Messenger_Subscriber_Messenger_Group" FromRole="Messenger_Group" ToRole="Messenger_Subscriber" />
-        </EntityType>
         <EntityType Name="Messenger_Message">
           <Key>
             <PropertyRef Name="Id" />
@@ -650,9 +578,10 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="IdGroup" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Messenger_Group" Relationship="user2_dbModel.FK_Messenger_Post_Messenger_Post" FromRole="Messenger_Post" ToRole="Messenger_Group" />
           <NavigationProperty Name="Messenger_SavedPost" Relationship="user2_dbModel.FK_Messenger_SavedPost_Messenger_Post" FromRole="Messenger_Post" ToRole="Messenger_SavedPost" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Messenger_User" Relationship="user2_dbModel.FK_Messenger_Post_Messenger_User" FromRole="Messenger_Post" ToRole="Messenger_User" />
         </EntityType>
         <EntityType Name="Messenger_SavedPost">
           <Key>
@@ -689,10 +618,8 @@
           <NavigationProperty Name="Messenger_Dialog1" Relationship="user2_dbModel.FK_Messenger_Dialog_Messenger_User1" FromRole="Messenger_User" ToRole="Messenger_Dialog" />
           <NavigationProperty Name="Messenger_Friendship" Relationship="user2_dbModel.FK_Messenger_Friendship_Messenger_User" FromRole="Messenger_User" ToRole="Messenger_Friendship" />
           <NavigationProperty Name="Messenger_Friendship1" Relationship="user2_dbModel.FK_Messenger_Friendship_Messenger_User1" FromRole="Messenger_User" ToRole="Messenger_Friendship" />
-          <NavigationProperty Name="Messenger_Group" Relationship="user2_dbModel.FK_Messenger_Group_Messenger_User" FromRole="Messenger_User" ToRole="Messenger_Group" />
           <NavigationProperty Name="Messenger_SavedPost" Relationship="user2_dbModel.FK_Messenger_SavedPost_Messenger_User" FromRole="Messenger_User" ToRole="Messenger_SavedPost" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Messenger_Subscriber" Relationship="user2_dbModel.FK_Messenger_Subscriber_Messenger_User" FromRole="Messenger_User" ToRole="Messenger_Subscriber" />
           <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -700,6 +627,9 @@
           <NavigationProperty Name="Messenger_Band" Relationship="user2_dbModel.FK_Messenger_User_Messenger_User" FromRole="Messenger_User" ToRole="Messenger_Band" />
           <NavigationProperty Name="Messenger_RequestOfFriendship" Relationship="user2_dbModel.FK_Messenger_RequestOfFriendship_Messenger_User" FromRole="Messenger_User" ToRole="Messenger_RequestOfFriendship" />
           <NavigationProperty Name="Messenger_RequestOfFriendship1" Relationship="user2_dbModel.FK_Messenger_RequestOfFriendship_Messenger_User1" FromRole="Messenger_User" ToRole="Messenger_RequestOfFriendship" />
+          <Property Name="IdRole" Type="Int32" />
+          <NavigationProperty Name="Messenger_Post" Relationship="user2_dbModel.FK_Messenger_Post_Messenger_User" FromRole="Messenger_User" ToRole="Messenger_Post" />
+          <NavigationProperty Name="Messenger_Role" Relationship="user2_dbModel.FK_Messenger_User_Messenger_Role" FromRole="Messenger_User" ToRole="Messenger_Role" />
         </EntityType>
         <Association Name="FK_Messenger_User_Messenger_Avatar">
           <End Type="user2_dbModel.Messenger_Avatar" Role="Messenger_Avatar" Multiplicity="0..1" />
@@ -797,30 +727,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Messenger_Group_Messenger_User">
-          <End Type="user2_dbModel.Messenger_User" Role="Messenger_User" Multiplicity="1" />
-          <End Type="user2_dbModel.Messenger_Group" Role="Messenger_Group" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Messenger_User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Messenger_Group">
-              <PropertyRef Name="IdOwner" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Messenger_Post_Messenger_Post">
-          <End Type="user2_dbModel.Messenger_Group" Role="Messenger_Group" Multiplicity="1" />
-          <End Type="user2_dbModel.Messenger_Post" Role="Messenger_Post" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Messenger_Group">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Messenger_Post">
-              <PropertyRef Name="IdGroup" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Messenger_Message_Messenger_Sticker">
           <End Type="user2_dbModel.Messenger_Sticker" Role="Messenger_Sticker" Multiplicity="0..1" />
           <End Type="user2_dbModel.Messenger_Message" Role="Messenger_Message" Multiplicity="*" />
@@ -853,42 +759,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Messenger_SavedPost">
-              <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Messenger_Subscriber">
-          <Key>
-            <PropertyRef Name="IdUser" />
-            <PropertyRef Name="IdGroup" />
-            <PropertyRef Name="DateOfSubscribe" />
-          </Key>
-          <Property Name="IdUser" Type="Int32" Nullable="false" />
-          <Property Name="IdGroup" Type="Int32" Nullable="false" />
-          <Property Name="DateOfSubscribe" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Messenger_Group" Relationship="user2_dbModel.FK_Messenger_Subscriber_Messenger_Group" FromRole="Messenger_Subscriber" ToRole="Messenger_Group" />
-          <NavigationProperty Name="Messenger_User" Relationship="user2_dbModel.FK_Messenger_Subscriber_Messenger_User" FromRole="Messenger_Subscriber" ToRole="Messenger_User" />
-        </EntityType>
-        <Association Name="FK_Messenger_Subscriber_Messenger_Group">
-          <End Type="user2_dbModel.Messenger_Group" Role="Messenger_Group" Multiplicity="1" />
-          <End Type="user2_dbModel.Messenger_Subscriber" Role="Messenger_Subscriber" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Messenger_Group">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Messenger_Subscriber">
-              <PropertyRef Name="IdGroup" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Messenger_Subscriber_Messenger_User">
-          <End Type="user2_dbModel.Messenger_User" Role="Messenger_User" Multiplicity="1" />
-          <End Type="user2_dbModel.Messenger_Subscriber" Role="Messenger_Subscriber" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Messenger_User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Messenger_Subscriber">
               <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
@@ -969,6 +839,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Messenger_Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Messenger_User" Relationship="user2_dbModel.FK_Messenger_User_Messenger_Role" FromRole="Messenger_Role" ToRole="Messenger_User" />
+        </EntityType>
+        <Association Name="FK_Messenger_Post_Messenger_User">
+          <End Type="user2_dbModel.Messenger_User" Role="Messenger_User" Multiplicity="1" />
+          <End Type="user2_dbModel.Messenger_Post" Role="Messenger_Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messenger_User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messenger_Post">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messenger_User_Messenger_Role">
+          <End Type="user2_dbModel.Messenger_Role" Role="Messenger_Role" Multiplicity="0..1" />
+          <End Type="user2_dbModel.Messenger_User" Role="Messenger_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Messenger_Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messenger_User">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1020,16 +922,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Messenger_Group">
-            <EntityTypeMapping TypeName="user2_dbModel.Messenger_Group">
-              <MappingFragment StoreEntitySet="Messenger_Group">
-                <ScalarProperty Name="IdOwner" ColumnName="IdOwner" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Messenger_Message">
             <EntityTypeMapping TypeName="user2_dbModel.Messenger_Message">
               <MappingFragment StoreEntitySet="Messenger_Message">
@@ -1046,7 +938,8 @@
           <EntitySetMapping Name="Messenger_Post">
             <EntityTypeMapping TypeName="user2_dbModel.Messenger_Post">
               <MappingFragment StoreEntitySet="Messenger_Post">
-                <ScalarProperty Name="IdGroup" ColumnName="IdGroup" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -1074,6 +967,7 @@
           <EntitySetMapping Name="Messenger_User">
             <EntityTypeMapping TypeName="user2_dbModel.Messenger_User">
               <MappingFragment StoreEntitySet="Messenger_User">
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
                 <ScalarProperty Name="IdBand" ColumnName="IdBand" />
                 <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1086,15 +980,6 @@
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Nickname" ColumnName="Nickname" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Messenger_Subscriber">
-            <EntityTypeMapping TypeName="user2_dbModel.Messenger_Subscriber">
-              <MappingFragment StoreEntitySet="Messenger_Subscriber">
-                <ScalarProperty Name="DateOfSubscribe" ColumnName="DateOfSubscribe" />
-                <ScalarProperty Name="IdGroup" ColumnName="IdGroup" />
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1120,6 +1005,14 @@
             <EntityTypeMapping TypeName="user2_dbModel.Messenger_Specialization">
               <MappingFragment StoreEntitySet="Messenger_Specialization">
                 <ScalarProperty Name="Specialization" ColumnName="Specialization" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messenger_Role">
+            <EntityTypeMapping TypeName="user2_dbModel.Messenger_Role">
+              <MappingFragment StoreEntitySet="Messenger_Role">
+                <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

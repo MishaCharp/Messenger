@@ -405,7 +405,31 @@
                     </StackPanel>
                 </Grid>
             </Border>
-            <Border Grid.RowSpan="2" Grid.Column="1" BorderBrush="#504e50" BorderThickness="3" Margin="10, 100,10,10" CornerRadius="20"/>
+            <Border Grid.RowSpan="2" Grid.Column="1" BorderBrush="#504e50" BorderThickness="3" Margin="10, 100,10,10" CornerRadius="20">
+                <StackPanel>
+
+                    <StackPanel HorizontalAlignment="Center" Margin="10">
+                        <TextBlock Text="Специальность" Foreground="White" FontSize="18"/>
+                        <ComboBox Width="150" FontSize="18" x:Name="SpecializationsCBox"/>
+                    </StackPanel>
+                    
+                    <StackPanel HorizontalAlignment="Center" Margin="10">
+                        <TextBlock Text="Группа" Foreground="White" FontSize="18"/>
+                        <ComboBox Width="150" FontSize="18" x:Name="GroupsCBox"/>
+                    </StackPanel>
+
+                    <StackPanel HorizontalAlignment="Center" Margin="10">
+                        <TextBlock Text="Страна" Foreground="White" FontSize="18"/>
+                        <ComboBox Width="150" FontSize="18" x:Name="CountriesCBox"/>
+                    </StackPanel>
+
+                    <StackPanel HorizontalAlignment="Center" Margin="10">
+                        <TextBlock Text="Город" Foreground="White" FontSize="18"/>
+                        <ComboBox Width="150" FontSize="18" x:Name="CitiesCBox"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
         </Grid>
         
     </Grid>

@@ -23,11 +23,10 @@ namespace Messenger.Entites
             this.Messenger_Dialog1 = new HashSet<Messenger_Dialog>();
             this.Messenger_Friendship = new HashSet<Messenger_Friendship>();
             this.Messenger_Friendship1 = new HashSet<Messenger_Friendship>();
-            this.Messenger_Group = new HashSet<Messenger_Group>();
             this.Messenger_SavedPost = new HashSet<Messenger_SavedPost>();
-            this.Messenger_Subscriber = new HashSet<Messenger_Subscriber>();
             this.Messenger_RequestOfFriendship = new HashSet<Messenger_RequestOfFriendship>();
             this.Messenger_RequestOfFriendship1 = new HashSet<Messenger_RequestOfFriendship>();
+            this.Messenger_Post = new HashSet<Messenger_Post>();
         }
     
         public int Id { get; set; }
@@ -42,7 +41,7 @@ namespace Messenger.Entites
         public string Name { get; set; }
         public string Patronymic { get; set; }
         public Nullable<int> IdBand { get; set; }
-
+        public Nullable<int> IdRole { get; set; }
 
         public ImageSource AvatarImageSource
         {
@@ -51,7 +50,6 @@ namespace Messenger.Entites
                 return App.avatars.FirstOrDefault(x => x.Key == IdAvatar).Value;
             }
         }
-
 
         public virtual Messenger_Avatar Messenger_Avatar { get; set; }
         public virtual Messenger_City Messenger_City { get; set; }
@@ -64,15 +62,14 @@ namespace Messenger.Entites
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Messenger_Friendship> Messenger_Friendship1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Messenger_Group> Messenger_Group { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Messenger_SavedPost> Messenger_SavedPost { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Messenger_Subscriber> Messenger_Subscriber { get; set; }
         public virtual Messenger_Band Messenger_Band { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Messenger_RequestOfFriendship> Messenger_RequestOfFriendship { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Messenger_RequestOfFriendship> Messenger_RequestOfFriendship1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Messenger_Post> Messenger_Post { get; set; }
+        public virtual Messenger_Role Messenger_Role { get; set; }
     }
 }

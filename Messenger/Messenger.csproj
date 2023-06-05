@@ -119,19 +119,16 @@
     <Compile Include="Entites\Messenger_Friendship.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entites\Messenger_Group.cs">
+    <Compile Include="Entites\Messenger_RequestOfFriendship.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entites\Messenger_RequestOfFriendship.cs">
+    <Compile Include="Entites\Messenger_Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Entites\Messenger_SavedPost.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Entites\Messenger_Specialization.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entites\Messenger_Subscriber.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Pages\RegistrationPage.xaml.cs">
