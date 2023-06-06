@@ -1,4 +1,5 @@
-﻿using Messenger.Windows;
+﻿using Messenger.Entites;
+using Messenger.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,6 +73,30 @@ namespace Messenger.Pages
 
         }
 
+        void SendSticker(int IdSticker)
+        {
+            App.Context.Messenger_Dialog.Where(x => x.Id == CurrentIdDialog).FirstOrDefault().LastMessage = "[Sticker]";
+            App.Context.Messenger_Message.Add(new Entites.Messenger_Message
+            {
+                IdDialog = CurrentIdDialog,
+                IdSticker = IdSticker,
+                LastIdSenderUser = App.CurrentUser.Id,
+                LastNicknameSenderUser = App.CurrentUser.Nickname,
+                Time = DateTime.Now
+            });
+            App.Context.SaveChanges();
+
+            MessageText.Text = "";
+
+            var lastItem = DialogListBox.Items[DialogListBox.Items.Count - 1];
+
+            DialogListBox.ScrollIntoView(lastItem);
+
+
+            StickersBorder.Visibility = Visibility.Collapsed;
+
+        }
+
         void SendMessage(string message)
         {
             App.Context.Messenger_Dialog.Where(x => x.Id == CurrentIdDialog).FirstOrDefault().LastMessage = message;
@@ -127,6 +152,15 @@ namespace Messenger.Pages
         private void GiveStickersClick(object sender, RoutedEventArgs e)
         {
             StickersBorder.Visibility = StickersBorder.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        private void SendStickerClick(object sender, MouseButtonEventArgs e)
+        {
+
+            var sticker = (KeyValuePair<int, ImageSource>)((sender as Image).DataContext);
+
+            SendSticker(sticker.Key);
+
         }
     }
 }

@@ -22,8 +22,20 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                        <Border Margin="4" Cursor="Hand" Background="{Binding BgColor}" BorderBrush="Black" CornerRadius="10,5,10,5" BorderThickness="1" Width="1000" Height="70">
+                        <Border Margin="4" Cursor="Hand" Background="{Binding BgColor}" BorderBrush="Black" CornerRadius="10,5,10,5" BorderThickness="1" Width="1000">
                         <Grid>
+                            <Grid Visibility="{Binding StickerPanelVisibility}" Height="140">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Border Background="{Binding AccountColor}" CornerRadius="20" BorderThickness="1" BorderBrush="Black" Height="40" Margin="5">
+                                    <TextBlock Foreground="#2b4569" Text="{Binding LastNicknameSenderUserTrim}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Image Margin="10" Grid.ColumnSpan="2" Source="{Binding ImageSticker}" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Time, StringFormat={}{0:MM.dd hh:mm}}" HorizontalAlignment="Right" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0 0 20 0"/>
+                            </Grid>
+                            <Grid Visibility="{Binding MessagePanelVisibility}" Height="70">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition/>
@@ -34,10 +46,10 @@
                             <StackPanel Grid.Column="1" Orientation="Vertical" Width="200" Height="50">
                             <TextBlock Text="{Binding Message}"/>
                             <TextBlock Text="{Binding Sticker}"/>
-                            <TextBlock Text="{Binding Time, StringFormat={}{0:MM.dd hh:mm}}"/>
-                        </StackPanel>
+                            </StackPanel>
+                                <TextBlock Text="{Binding Time, StringFormat={}{0:MM.dd hh:mm}}" HorizontalAlignment="Right" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0 0 20 0"/>
+                            </Grid>
                         </Grid>
-
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -55,7 +67,7 @@
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding Value}" Width="95" Height="95"/>
+                    <Image MouseLeftButtonDown="SendStickerClick" Source="{Binding Value}" Width="95" Height="95"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

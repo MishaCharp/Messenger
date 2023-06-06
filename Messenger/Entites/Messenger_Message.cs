@@ -9,8 +9,11 @@
 
 namespace Messenger.Entites
 {
+    using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
     using System.Windows.Media;
 
     public partial class Messenger_Message
@@ -22,6 +25,27 @@ namespace Messenger.Entites
         public System.DateTime Time { get; set; }
         public Nullable<int> LastIdSenderUser { get; set; }
         public string LastNicknameSenderUser { get; set; }
+
+        public System.Windows.Visibility StickerPanelVisibility { get
+            {
+                return IdSticker==null ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+            } 
+        }
+
+        public System.Windows.Media.ImageSource ImageSticker 
+        {    get
+            {
+                return App.stickers.FirstOrDefault(x=>x.Key == IdSticker).Value;
+            }
+        }
+
+        public System.Windows.Visibility MessagePanelVisibility
+        {
+            get
+            {
+                return IdSticker == null ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            }
+        }
 
         public System.Windows.Media.Brush BgColor
         {
