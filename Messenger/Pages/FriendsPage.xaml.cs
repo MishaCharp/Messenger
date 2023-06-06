@@ -24,7 +24,7 @@ namespace Messenger.Pages
     public partial class FriendsPage : Page
     {
 
-        public static ObservableCollection<Messenger_User> friends = null;
+        public static List<Messenger_User> friends = null;
 
         void RefreshData()
         {
@@ -61,12 +61,10 @@ namespace Messenger.Pages
                 }
             }
 
-            friends = new ObservableCollection<Messenger_User>(App.Context.Messenger_User.Where(x => x.Id != App.CurrentUser.Id
+            friends = new List<Messenger_User>(App.Context.Messenger_User.Where(x => x.Id != App.CurrentUser.Id
             && !ids.Contains(x.Id) 
             && !idsTo.Contains(x.Id)
             && !idsFriend.Contains(x.Id)).OrderBy(x => x.Nickname));
-
-            CountOfUserTextBlock.Text = $"Пользователи ({friends.Count})";
 
             FriendsListBox.ItemsSource = friends;
 
@@ -76,11 +74,62 @@ namespace Messenger.Pages
 
             FriendsListView.ItemsSource = App.Context.Messenger_User.Where(x=> idsFriend.Contains(x.Id)).ToList();
 
+            if (IsPrepod.IsChecked != true)
+            {
+                if (SearchTextBox.Text != "")
+                {
+                    friends = friends.Where(x => x.Nickname.Contains(SearchTextBox.Text)).ToList();
+                }
+                if (SpecializationsCBox.SelectedIndex >= 0)
+                {
+                    var _spec = SpecializationsCBox.SelectedItem as Messenger_Specialization;
+                    friends = friends.Where(x => x.Messenger_Band.IdSpecialization == _spec.Id).ToList();
+                }
+                if (GroupsCBox.SelectedIndex >= 0)
+                {
+                    var _group = GroupsCBox.SelectedItem as Messenger_Band;
+                    friends = friends.Where(x => x.IdBand == _group.Id).ToList();
+                }
+                if(CountriesCBox.SelectedIndex >= 0)
+                {
+                    var _country = CountriesCBox.SelectedItem as Messenger_Country;
+                    friends = friends.Where(x => x.Messenger_City.Messenger_Country.Id == _country.Id).ToList();
+                }
+                if(CitiesCBox.SelectedIndex >= 0)
+                {
+                    var _city = CitiesCBox.SelectedItem as Messenger_City;
+                    friends = friends.Where(x => x.IdCity == _city.Id).ToList();
+                }
+            }
+            else
+            {
+                friends = friends.Where(x=>x.IdRole == 2).ToList();
+            }
+
+            
+
+            FriendsListBox.ItemsSource = friends;
+
+            CountOfUserTextBlock.Text = $"Пользователи ({friends.Count})";
+
         }
+
+        List<Messenger_Specialization> Specializations = App.Context.Messenger_Specialization.ToList();
+
+        List<Messenger_Band> Bands = App.Context.Messenger_Band.ToList();
+
+        List<Messenger_Country> Countries = App.Context.Messenger_Country.ToList();
+
+        List<Messenger_City> Cities = App.Context.Messenger_City.ToList();
 
         public FriendsPage()
         {
             InitializeComponent();
+
+            SpecializationsCBox.ItemsSource = Specializations;
+            GroupsCBox.ItemsSource = Bands;
+            CountriesCBox.ItemsSource = Countries;
+            CitiesCBox.ItemsSource = Cities;
 
             App.AnimateBorderOpacity(this);
 
@@ -90,7 +139,7 @@ namespace Messenger.Pages
 
         private void SearchTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            FriendsListBox.ItemsSource = friends.Where(x => x.Nickname.Contains(SearchTextBox.Text));
+            RefreshData();
         }
 
         private void AddFriendButtonClick(object sender, RoutedEventArgs e)
@@ -245,6 +294,110 @@ namespace Messenger.Pages
             var user = (sender as TextBlock).DataContext as Messenger_User;
 
             new WriteWindow(Window.GetWindow(this), user).ShowDialog();
+        }
+
+        private void SpecializationChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            var _spec = (sender as ComboBox).SelectedItem as Messenger_Specialization;
+
+            if (_spec != null)
+            {
+                GroupsCBox.ItemsSource = Bands.Where(x => x.IdSpecialization == _spec.Id);
+
+            }
+
+            RefreshData();
+
+        }
+
+        private void BandChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            var _band = (sender as ComboBox).SelectedItem as Messenger_Band;
+
+
+            if (SpecializationsCBox.SelectedIndex < 0)
+            {
+                SpecializationsCBox.SelectedItem = Specializations.FirstOrDefault(x=>x.Id == _band.IdSpecialization);
+            }
+
+            RefreshData();
+        }
+
+        private void CountryChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            var _country = (sender as ComboBox).SelectedItem as Messenger_Country;
+
+            if(_country!=null)
+            {
+                CitiesCBox.ItemsSource = Cities.Where(x => x.IdCountry == _country.Id);
+            }
+
+            RefreshData();
+
+        }
+
+        private void CityChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var _city = (sender as ComboBox).SelectedItem as Messenger_City;
+
+
+            if (CountriesCBox.SelectedIndex < 0)
+            {
+                CountriesCBox.SelectedItem = Countries.FirstOrDefault(x => x.Id == _city.IdCountry);
+            }
+
+            RefreshData();
+        }
+
+        private void CheckBoxChecked(object sender, RoutedEventArgs e)
+        {
+            a.IsEnabled = false;
+            b.IsEnabled = false;
+            c.IsEnabled = false;
+            d.IsEnabled = false;
+
+            RefreshData();
+
+        }
+
+        private void RefreshParams()
+        {
+
+            Specializations = App.Context.Messenger_Specialization.ToList();
+
+            Bands = App.Context.Messenger_Band.ToList();
+
+            Countries = App.Context.Messenger_Country.ToList();
+
+            Cities = App.Context.Messenger_City.ToList();
+
+            SpecializationsCBox.ItemsSource = Specializations;
+            GroupsCBox.ItemsSource = Bands;
+            CountriesCBox.ItemsSource = Countries;
+            CitiesCBox.ItemsSource = Cities;
+        }
+
+        private void CheckBoxUnchecked(object sender, RoutedEventArgs e)
+        {
+            a.IsEnabled = !false;
+            b.IsEnabled = !false;
+            c.IsEnabled = !false;
+            d.IsEnabled = !false;
+
+            RefreshData();
+        }
+
+        private void ClearParamsBtn(object sender, RoutedEventArgs e)
+        {
+            GroupsCBox.SelectedIndex = -1;
+            SpecializationsCBox.SelectedIndex = -1;
+            CitiesCBox.SelectedIndex = -1;
+            CountriesCBox.SelectedIndex = -1;
+
+            RefreshParams();
         }
     }
 

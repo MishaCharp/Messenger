@@ -89,5 +89,10 @@ namespace Messenger.Windows
             }
 
         }
+
+        private void CloseBtn(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

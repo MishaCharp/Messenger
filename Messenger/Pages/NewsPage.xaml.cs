@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Messenger.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,8 @@ namespace Messenger.Pages
         public NewsPage()
         {
             InitializeComponent();
+
+            NewPostBtn.Visibility = App.CurrentUser.IdRole == 2 ? Visibility.Visible : Visibility.Collapsed;
 
             RefreshData();
         }
@@ -59,6 +62,16 @@ namespace Messenger.Pages
             postList = App.Context.Messenger_Post.OrderByDescending(x => x.DateTime).ToList();
             PostLView.ItemsSource = null;
             PostLView.ItemsSource = postList;
+        }
+
+        private void AddNewPostClick(object sender, RoutedEventArgs e)
+        {
+            new CreateNewPost()
+            {
+                Owner = App.Current.MainWindow
+            }.ShowDialog();
+
+            RefreshData() ;
         }
     }
 }

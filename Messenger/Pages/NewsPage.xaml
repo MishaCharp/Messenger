@@ -10,7 +10,9 @@
       Title="NewsPage">
 
     <Grid>
-
+        <Button x:Name="NewPostBtn" Click="AddNewPostClick" Style="{DynamicResource MaterialDesignFloatingActionLightButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 35 20" Panel.ZIndex="10">
+            <materialDesign:PackIcon Kind="Create" Width="25" Height="25"/>
+        </Button>
         <ListView x:Name="PostLView">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>

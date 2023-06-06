@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Messenger.Windows;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -27,6 +28,14 @@ namespace Messenger.Pages
             InitializeComponent();
             OpenMenuTextBlock.Text = "<<";
             AccountPanel.Background = new SolidColorBrush(Color.FromRgb(4, 18, 32));
+
+            if(App.CurrentUser.IdBand is null)
+            {
+                new SpecBandForUser()
+                {
+                    Owner = App.Current.MainWindow
+                }.ShowDialog();
+            }
 
             MessengerFrame.Navigate(new AccountPage());
         }

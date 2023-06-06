@@ -137,11 +137,17 @@
     <Compile Include="Pages\SavedPage.xaml.cs">
       <DependentUpon>SavedPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\CreateNewPost.xaml.cs">
+      <DependentUpon>CreateNewPost.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\NewMessageBox.xaml.cs">
       <DependentUpon>NewMessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SpecBandForUser.xaml.cs">
+      <DependentUpon>SpecBandForUser.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\WriteWindow.xaml.cs">
       <DependentUpon>WriteWindow.xaml</DependentUpon>
@@ -224,11 +230,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\CreateNewPost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\LoadingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\NewMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SpecBandForUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
