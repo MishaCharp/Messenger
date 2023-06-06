@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -19,6 +22,31 @@ namespace Messenger
     /// </summary>
     public partial class App : Application
     {
+
+        public static ImageSource BytesToImageSource(byte[] _Image)
+        {
+            byte[] bytes = _Image;
+
+            System.Drawing.Image image;
+
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+                image = System.Drawing.Image.FromStream(ms);
+            }
+
+            Bitmap bitmap = new Bitmap(image);
+
+            BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
+            bitmap.GetHbitmap(),
+            IntPtr.Zero,
+            Int32Rect.Empty,
+            BitmapSizeOptions.FromEmptyOptions());
+
+
+            bitmap.Dispose();
+
+            return bitmapSource;
+        }
 
         public static void AnimateBorderOpacityFast(DependencyObject _object)
         {
@@ -52,6 +80,8 @@ namespace Messenger
             storyboard.Begin();
         }
 
+        public static Dictionary<int,ImageSource> stickers = new Dictionary<int, ImageSource>();
+
         public static Dictionary<int,ImageSource> avatars { get; set; } = new Dictionary<int, ImageSource>();
 
         protected override void OnStartup(StartupEventArgs e)
@@ -64,6 +94,14 @@ namespace Messenger
                         avatar.Id, new Converters.methods().ConvertBase64ToImageSource(avatar.Avatar)
                     );
                 }
+
+                foreach(var sticker in Context.Messenger_Sticker.ToList())
+                {
+                    stickers.Add(
+                        sticker.Id, BytesToImageSource(sticker.Image)
+                    );
+                }
+
             }
             catch(Exception ex)
             {

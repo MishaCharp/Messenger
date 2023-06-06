@@ -48,6 +48,8 @@ namespace Messenger.Pages
 
             DialogListBox.ScrollIntoView(lastItem);
 
+            StickersPanel.ItemsSource = App.stickers;
+
         }
 
         int messagesCount = 0;
@@ -120,6 +122,11 @@ namespace Messenger.Pages
                 }
 
             }
+        }
+
+        private void GiveStickersClick(object sender, RoutedEventArgs e)
+        {
+            StickersBorder.Visibility = StickersBorder.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }

@@ -43,9 +43,30 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
+        <Border x:Name="StickersBorder" Visibility="Collapsed" Width="350" CornerRadius="15" Height="250" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 0 -10">
+            <Border.Background>
+                <SolidColorBrush Color="#324157" Opacity="0.5"/>
+            </Border.Background>
+        <ListView x:Name="StickersPanel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding Value}" Width="95" Height="95"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        </Border>
+        
         <StackPanel Orientation="Horizontal" Grid.Row="1" Background="#293e5b">
-            <TextBox KeyDown="IsEnterClicked" Margin="20" TextWrapping="Wrap" Foreground="White" x:Name="MessageText" Style="{DynamicResource MaterialDesignOutlinedTextBox}" Width="1000" FontSize="20"/>
-            <Button Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" x:Name="SendMessageButton" Click="SendMessageButtonClick" Cursor="Hand" FontSize="20">
+            <TextBox KeyDown="IsEnterClicked" Margin="20" TextWrapping="Wrap" Foreground="White" x:Name="MessageText" Style="{DynamicResource MaterialDesignOutlinedTextBox}" Width="950" FontSize="20"/>
+            <Button Click="GiveStickersClick" Margin="5" Style="{DynamicResource MaterialDesignFloatingActionDarkButton}" x:Name="SendStickerButton" Cursor="Hand" FontSize="20">
+                <materialDesign:PackIcon Kind="StickerEmoji"/>
+            </Button>
+            <Button Margin="5" Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" x:Name="SendMessageButton" Click="SendMessageButtonClick" Cursor="Hand" FontSize="20">
                 <materialDesign:PackIcon Kind="Send"/>
             </Button>
         </StackPanel>

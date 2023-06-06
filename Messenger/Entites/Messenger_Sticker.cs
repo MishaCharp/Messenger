@@ -11,7 +11,13 @@ namespace Messenger.Entites
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Drawing;
+    using System.IO;
+    using System.Windows;
+    using System.Windows.Interop;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+
     public partial class Messenger_Sticker
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,7 +25,8 @@ namespace Messenger.Entites
         {
             this.Messenger_Message = new HashSet<Messenger_Message>();
         }
-    
+        
+
         public int Id { get; set; }
         public byte[] Image { get; set; }
     
